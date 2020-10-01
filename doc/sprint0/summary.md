@@ -2,8 +2,11 @@
 The project’s objective is to create an e-learning platform to simplify the process of training employees as well as matching students/consultants to social initiatives.
 ## Key Users
 - Students
+    - I.e John—a student at a University who is strapped on cash and can't afford to take courses on coursera to develop his portfolio.
 - Consultants
+    - I.e Molly—an impact consultant who is having trouble finding postings and contacting social initatives and clients.
 - Organizations
+    - I.e Dutch works for organization "ABC" and is working on a project which he is underfunded for and his team is stretched too thin.
 ## Key Use Cases
 - Students
     1. Can take courses
