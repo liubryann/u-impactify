@@ -5,7 +5,7 @@
 - Coursera [https://www.coursera.org/]
 - Khan Academy [https://www.khanacademy.org/]
 ## How is your product different?
-Our product is different because it’s intended use is for the not-for-profit sector whereas most other e-learning platforms are for-profit. U-impactify’s main goal is to help individuals who may not have the opportunity to go take courses at udemy or coursera due to financial constraints while on the other hand U-impactify can help these individuals through certain means such as the “giving garden” where students can apply for subsidized course offerings. Furthermore, the giving garden also allows students who have completed courses to volunteer their skills for consultants as well which gives them relevant experience, something no other e-learning platform does.
+Our product is different because it’s intended use is for the not-for-profit sector whereas most other e-learning platforms are for-profit. U-impactify’s main goals is to bridge the gap between individuals in the social sector or otherwise, instructors, and social initiatives. It does this by offering courses created by consultants in the social sector at a lower cost to students signed up on U-Impactify. It further helps students signed up on U-Impactify through the “giving garden” where they can offer their skills gained through taking courses. It also helps consultants and organizations by giving them a centralized platform to search for each other which can reduce time and money spent seeking each other. 
 ## If your product is better for specific users and/or specific scenarios?
 Yes
 ## Who are the users and/or what are the scenarios?
