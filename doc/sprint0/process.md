@@ -24,7 +24,7 @@ When making user stories, we decided to brainstorm all our ideas before attachin
 | Low | <ul><li>Stories that include ‘nice to have’ features that can be added near the end</li><li>Stories that do not require major backend or frontend design</li></ul> |
 
 
- Furthermore, we decided to use the Fibonacci Sequence for story points because most team members were familiar with it. To choose story points, we used an App called Scrum Time - Planning Poker. This allowed use to show the number of points we think is appropriate, and the majority was chosen.
+ Furthermore, we decided to use the Fibonacci Sequence for story points because most team members were familiar with it. To choose story points, we used an App called Scrum Time - Planning Poker. This allowed us to show the number of points we think is appropriate, and the majority was chosen.
 
 Though our team worked well this sprint, something we could improve upon for next time is how often we have team meetings. For the duration of Sprint0, daily meetings as a team were not necessary, however this will change during later sprints. Ensuring that each team member is committed to daily standups will be a priority for this team.
 
