@@ -8,4 +8,4 @@
 | Roger Zhang | zhan6322    | 1005002952  | runjie.zhang@mail.utoronto.ca| Facebook, Slack |
 | Harry Geng  | gengzhi1    | 1005042044  | harry.geng@mail.utoronto.ca  | Facebook, Slack |
 
-[Discord Chat Invite](https://discord.gg/e2PygR)
+[Discord Chat Invite](https://discord.gg/jeCHxJj)
