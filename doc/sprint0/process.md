@@ -11,6 +11,7 @@ Overall, our team worked very well during Sprint0 of this project. This was larg
 | Process, Done Definition | Shree |
 | Team Contract | Team effort |
 | Summary, Competition| Simar |
+|Personas.pdf| Eric and Bryan |
 
 Making decisions as a team were also done through Messenger Poll. We brainstormed ideas, as a group during a team call, and then a decision was arrived at by a majority vote. If an idea was not chosen by the group but there was a strong advocate for it, the team listened to their opinion and sometimes took a revote. This did not happen often, but it was a good solution for when it did. 
 
