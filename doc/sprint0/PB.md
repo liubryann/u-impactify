@@ -1,3 +1,4 @@
+The numerical series that our team used to assign story points is the Fibbonacci sequence. We set our minimum value as 1 and maximum value as 13, and estimated user stories accordingly.
 | User Story | Priority | Estimate |
 | ---------- | -------- | -------- |
 |As John Buck,  a student I want to be able to log into the system so that I can access the website| Highest | 5
