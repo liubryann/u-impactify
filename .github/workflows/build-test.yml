@@ -17,20 +17,12 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-<<<<<<< HEAD
-        working-directory: ../../backend/functions
-=======
         working-directory: ./backend/functions
->>>>>>> 3749beac54502dabe1e8968e6f55b4c979fc6e21
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: 8
-<<<<<<< HEAD
-      - run: cd npm ci
-=======
       - run: ls -la
       - run: npm ci
->>>>>>> 3749beac54502dabe1e8968e6f55b4c979fc6e21
       - run: npm test
