@@ -44,6 +44,7 @@ exports.signup = (req, res) => {
                     type: newUser.type,
                     org: newUser.org,
                     email: newUser.email,
+                    uid
                 };
             }
             else {
@@ -51,7 +52,8 @@ exports.signup = (req, res) => {
                     type: newUser.type,
                     email: newUser.email,
                     first: newUser.first, 
-                    last: newUser.last
+                    last: newUser.last,
+                    uid
                 };
             }
             return db.doc(`/users/userTypes/${newUser.type}/${newUser.email}`).set(userCredentials); 
