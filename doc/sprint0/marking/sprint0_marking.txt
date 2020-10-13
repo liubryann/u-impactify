@@ -38,9 +38,10 @@ Product Backlog PB.md and Jira (Max 8 marks)
    "As Tien Levi, an instructor, I want to be able to sign up for the application as an impact consultant"
    "As Mary Janet, representing her organization, I want to be able to sign up for the application as a social initiative"
   -Writing (max 2 marks) [0 marks = writing is poor and with errors, 1 mark = writing is not clear for some stories, 2 marks = writing is very clear for all stories]
-   Your mark: 2
+   Your mark: 1
+   Missing criteria of satisfaction.
   
-   PB.md mark: 7
+   PB.md mark: 6
    
 Definition of done: done.md (max 2 marks)
    -Definiton of done is relevant to the project and applies to all stories [2 marks]
@@ -91,6 +92,6 @@ User experience: (max 4 marks)
    User experience mark: 4 - well done!
    
    
-Total mark for phase 1 : 39/42   
+Total mark for phase 1 : 38/42   
 	
 
