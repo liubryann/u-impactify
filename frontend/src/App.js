@@ -4,6 +4,9 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import './App.css';
 // Pages
 import Login from './pages/Login';
+//Redux
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 const theme = createMuiTheme({
     palette: {
@@ -20,13 +23,15 @@ const theme = createMuiTheme({
 
 function App() {
     return (
-        <ThemeProvider theme={theme}>
-            <Router>
-                <Switch>
-                    <Route exact path="/login" render={() => <Login />} />
-                </Switch>
-            </Router>
-        </ThemeProvider>
+        <Provider store={store}>
+            <ThemeProvider theme={theme}>
+                <Router>
+                    <Switch>
+                        <Route exact path="/login" render={() => <Login />} />
+                    </Switch>
+                </Router>
+            </ThemeProvider>
+        </Provider>
     );
 }
 
