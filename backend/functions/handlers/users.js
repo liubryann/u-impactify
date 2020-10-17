@@ -1,5 +1,5 @@
 const { admin, db } = require("../util/admin");
-const { validateSignupData } = require('../util/validators');
+const { validateSignupData, validateLoginData } = require('../util/validators');
 const { userTypes } = require('../util/constants');
 
 const config = require("../util/config");
@@ -71,3 +71,33 @@ exports.signup = (req, res) => {
             }
         })
 }
+
+// Login user 
+exports.login = (req, res) => {
+    const user = {
+        email: req.body.email,
+        password: req.body.password,
+    };
+
+    const { valid, errors } = validateLoginData(user);
+
+    if(!valid) return res.status(400).json(errors); 
+
+    firebase.auth().signInWithEmailAndPassword(user.email, user.password)
+        .then(data => {
+            return data.user.getIdToken();
+        })
+        .then(token => {
+            return res.json({ token });
+        })
+        .catch(err => {
+            console.error(err);
+            if(err.code === 'auth/wrong-password'){
+                return res.status(403).json({ general: 'Wrong credentials. Please try again.'})
+            }
+            else { 
+                return res.status(500).json({ error: err.code });
+            }
+            
+        });
+};
