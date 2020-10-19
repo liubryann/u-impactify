@@ -4,6 +4,9 @@ const app = require('express')();
 
 const { signup, login } = require ('./handlers/users'); 
 
+const cors = require('cors');
+app.use(cors());
+
 // user routes
 app.post('/signup', signup);
 app.post('/login', login);
