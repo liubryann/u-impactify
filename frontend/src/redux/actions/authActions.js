@@ -36,7 +36,7 @@ export const loginUser = (userData, loginSuccess, loginFailure) => ( async dispa
 
 const setAuthHeader = (token) => {
     const idToken = `Bearer ${token}`;
-    localStorage.setItem('idToken', idToken);
+    window.localStorage.setItem('idToken', token);
     axios.defaults.headers.common['Authorization'] = idToken;
   };
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import './App.css';
 // Pages
@@ -7,6 +7,8 @@ import Login from './pages/Login';
 //Redux
 import { Provider } from 'react-redux';
 import store from './redux/store';
+
+import { isLoggedIn } from './redux/actions/authActions'
 
 const theme = createMuiTheme({
     palette: {
