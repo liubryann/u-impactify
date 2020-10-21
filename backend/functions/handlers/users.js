@@ -2,7 +2,7 @@ const { admin, db } = require("../util/admin");
 const { validateSignupData, validateLoginData } = require('../util/validators');
 const { userTypes } = require('../util/constants');
 const { user } = require("firebase-functions/lib/providers/auth");
-
+const firebase = require("firebase");
 // Sign up 
 exports.signup = (req, res) => {
     const newUser = {
@@ -19,7 +19,7 @@ exports.signup = (req, res) => {
     if(!valid) return res.status(400).json(errors); 
 
     let token, uid; 
-    db.doc(`/users/userTypes/${newUser.type}/${newUser.email}`).get()
+    db.doc(`/users/${newUser.email}`).get()
         .then(doc => {
             if (doc.exists) {
                 return res.status(400).json({ email: 'This email is already taken' });
@@ -52,7 +52,7 @@ exports.signup = (req, res) => {
                     uid
                 };
             }
-            return db.doc(`/users/userTypes/${newUser.type}/${newUser.email}`).set(userCredentials); 
+            return db.doc(`/users/${newUser.email}`).set(userCredentials); 
         })
         .then(() => {
             return res.status(201).json({ token });
@@ -74,17 +74,30 @@ exports.login = (req, res) => {
         email: req.body.email,
         password: req.body.password,
     };
-
+    
     const { valid, errors } = validateLoginData(user);
-
+    
     if(!valid) return res.status(400).json(errors); 
+    
 
     firebase.auth().signInWithEmailAndPassword(user.email, user.password)
         .then(data => {
             return data.user.getIdToken();
         })
         .then(token => {
-            return res.json({ token });
+            db.doc(`/users/${user.email}`).get()
+                .then(doc => {
+                    if(doc.exists){
+                        const { type } = doc.data();
+                        return res.status(201).json({token, type});           
+                    } else {
+                        return res.status(404).json({error: "No such email"});
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                    return res.status(500).json({error: err.code});
+                });
         })
         .catch(err => {
             console.error(err);
@@ -94,20 +107,20 @@ exports.login = (req, res) => {
             else { 
                 return res.status(500).json({ error: err.code });
             }
-            
         });
+
 };
 
 exports.userCourses = (req, res) => {
     const { email, usertype } = req.body;
     if( usertype == userTypes.SOCIAL_INITIATIVE) {
-        return res.status(500).json({error: "No courses"});
+        return res.status(500).json({error: "No Courses"});
     }
     const userData = [];
-    db.collection(`/users/userTypes/${usertype}/${email}/courses`).get()
+    db.collection(`/users/${email}/courses`).get()
         .then(querySnapshot => {
             if(querySnapshot.empty){
-                return res.status(404).json({error: "invalid request"});
+                return res.status(404).json({error: "No Courses"});
             }
             querySnapshot.docs.forEach((doc) => {
                 if(doc.exists){

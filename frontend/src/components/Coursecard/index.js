@@ -14,6 +14,9 @@ import Collapse from '@material-ui/core/Collapse';
 import Divider from "@material-ui/core/Divider";
 import Avatar from "@material-ui/core/Avatar";
 
+import { getCourse } from '../../redux/actions/coursesActions';
+
+
 const useStyles = makeStyles((theme) => ({
     root: {
         height: '100vh',
@@ -51,13 +54,17 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function CourseCard(props) {
+function CourseCard(props) {
     const classes = useStyles();
+    props.getCourse(props.userCourseId);
     const [expanded, setExpanded] = React.useState(false);
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
+
+    //props.courseId is the courseId we need 
+
 
     return (
         <Card className={classes.root, classes.card} style={{ backgroundColor: ' #9badbd', color: 'white' }}>
@@ -72,11 +79,11 @@ export default function CourseCard(props) {
                 className={classes.header}
                 avatar={
                     <Avatar
-                        alt={props.course.instructor}
+                        alt={props.instructor}
                     ></Avatar>
                 }
-                title={props.course.name}
-                subheader={props.course.instructor}
+                title={props.name}
+                subheader={props.instructor}
                 subheaderTypographyProps={{ variant: 'subtitle2' }}
                 titleTypographyProps={{ variant: 'subtitle1' }}
             />
@@ -98,10 +105,22 @@ export default function CourseCard(props) {
                     </Typography>
                     <Divider className={classes.divider} dark />
                     <Typography variant='subtitle2'>
-                        {props.course.overview}
+                        {props.overview}
                     </Typography>
                 </CardContent>
             </Collapse>
         </Card>
     );
 }
+
+const mapStateToProps = (state) => ({
+    name: state.course.name,
+    instructor: state.course.instructor,
+    overview: state.course.overview,
+});
+
+const mapDispatchToProps = {
+    getCourse: getCourse
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CourseCard);
