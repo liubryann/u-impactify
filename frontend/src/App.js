@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import './App.css';
 // Pages
+import Landing from './pages/Landing';
 import Login from './pages/Login';
 //Redux
 import { Provider } from 'react-redux';
@@ -30,6 +31,7 @@ function App() {
                 <Router>
                     <Switch>
                         <Route exact path="/login" render={() => <Login />} />
+                        <Route exact path="/" render={() => <Landing />} />
                     </Switch>
                 </Router>
             </ThemeProvider>
