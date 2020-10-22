@@ -1,8 +1,8 @@
-import { GETCOURSE, COURSE_ERROR } from '../types';
+import { GETCOURSE, COURSE_ERROR, SET_COURSES } from '../types';
 import API from '../../api';
 
 export const getCourse = (courseId) => ( async dispatch => { 
-    await API.get('/getCourse', { courseId })
+    await API.post('/getCourse', { courseId })
         .then((response) => {
             const { name, instructor, overview} = response.data;
             dispatch({ 
@@ -15,8 +15,11 @@ export const getCourse = (courseId) => ( async dispatch => {
              });
         })
         .catch((err) => {
-            console.log(err.response);
-            const msg = err.response.data.error
+            console.log(err);
+            let msg = '';
+            if(err.response){
+                msg = err.response.data.error;
+            }
             dispatch({
                 type: COURSE_ERROR,
                 payload: {
@@ -25,3 +28,19 @@ export const getCourse = (courseId) => ( async dispatch => {
             })
         })
 });
+
+export const getAllCourses = () => ( async dispatch => {
+    await API.get('/getAllCourses')
+        .then((res) => {
+            dispatch({
+                type: SET_COURSES,
+                payload: res.data
+            })
+        })
+        .catch(err => {
+            dispatch({
+                type: SET_COURSES, 
+                payload: []
+            })
+        })
+})

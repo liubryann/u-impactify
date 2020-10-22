@@ -10,7 +10,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: '100vh',
+    flexGrow: 1,
   },
   title: {
     flexGrow: 1,
@@ -22,13 +22,14 @@ const useStyles = makeStyles((theme) => ({
     color: '#000000',
     background: '#dbd9d7',
     elevation: '0',
+    position: 'absolute'
   }
 }));
 
 function Bottombar() {
   const classes = useStyles();
   return (
-    <AppBar position="fixed" className={classes.botBar}>
+    <AppBar className={classes.botBar}>
       <Toolbar>
         <IconButton edge="start" className={classes.insButton} color="inherit" aria-label="menu">
           <InstagramIcon />

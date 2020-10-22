@@ -1,6 +1,7 @@
-import { USER_COURSE_IDS, USER_ERROR } from '../types';
+import { USER_COURSE_IDS, USER_ERROR, USER_TYPE } from '../types';
 
 const initialState = {
+    userType: null,
     userCourseIds: [],
     errors: null,
 }
@@ -8,15 +9,16 @@ const initialState = {
 export default function(state = initialState, action){
     switch(action.type){
         case USER_COURSE_IDS:
+            state.userCourseIds = action.payload.courses;
+            return state
+        case USER_TYPE:
             return {
                 ...state,
-                userCourseIds: action.payload.courses
+                userType: action.payload.type
             }
         case USER_ERROR:
-            return {
-                ...state,
-                errors: action.payload.msg
-            }
+            state.errors = action.payload.msg;
+            return state
         default:
             return state
     }

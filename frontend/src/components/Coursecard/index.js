@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -14,8 +14,11 @@ import Collapse from '@material-ui/core/Collapse';
 import Divider from "@material-ui/core/Divider";
 import Avatar from "@material-ui/core/Avatar";
 
-import { getCourse } from '../../redux/actions/coursesActions';
+// import { connect, useSelector, shallowEqual } from 'react-redux';
 
+// import { getCourseName, getCourseInstructor, getCourseOverview } from '../../redux/selectors/coursesSelectors';
+// import { getCourse } from '../../redux/actions/coursesActions'
+// import store from '../../redux/store';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -26,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
         maxWidth: 300,
         backgroundColor: theme.palette.primary,
         margin: 'auto',
-        marginBottom: '15px'
+        marginBottom: '7.5px',
+        marginTop: '7.5px'
     },
     expand: {
         height: 30,
@@ -54,17 +58,15 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
 function CourseCard(props) {
     const classes = useStyles();
-    props.getCourse(props.userCourseId);
     const [expanded, setExpanded] = React.useState(false);
-
+    
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
-
-    //props.courseId is the courseId we need 
-
+    
 
     return (
         <Card className={classes.root, classes.card} style={{ backgroundColor: ' #9badbd', color: 'white' }}>
@@ -79,6 +81,7 @@ function CourseCard(props) {
                 className={classes.header}
                 avatar={
                     <Avatar
+
                         alt={props.instructor}
                     ></Avatar>
                 }
@@ -113,14 +116,11 @@ function CourseCard(props) {
     );
 }
 
-const mapStateToProps = (state) => ({
-    name: state.course.name,
-    instructor: state.course.instructor,
-    overview: state.course.overview,
-});
+// const mapStateToProps = (state) => ({});
 
-const mapDispatchToProps = {
-    getCourse: getCourse
-};
+// const mapDispatchToProps = {
+//     getCourse: getCourse
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CourseCard);
+// export default connect(mapStateToProps, mapDispatchToProps)(CourseCard);
+export default CourseCard;

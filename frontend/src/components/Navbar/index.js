@@ -12,7 +12,6 @@ import { logoutUser } from '../../redux/actions/authActions';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    height:'100vh'
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -44,7 +43,7 @@ export default function NavBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="fixed" className={classes.bar}>
+      <AppBar position="static" className={classes.bar}>
         <Toolbar>
           <Typography variant="h4" className={classes.title}>
             U-Impactify

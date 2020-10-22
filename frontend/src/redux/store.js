@@ -11,7 +11,7 @@ const middleware = [thunk];
 const reducers = combineReducers({
     auth: authReducer,
     courses: coursesReducer,
-    user: userReducer
+    user: userReducer,
 });
 
 const store = createStore(

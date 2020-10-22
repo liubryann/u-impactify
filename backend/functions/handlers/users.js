@@ -85,19 +85,7 @@ exports.login = (req, res) => {
             return data.user.getIdToken();
         })
         .then(token => {
-            db.doc(`/users/${user.email}`).get()
-                .then(doc => {
-                    if(doc.exists){
-                        const { type } = doc.data();
-                        return res.status(201).json({token, type});           
-                    } else {
-                        return res.status(404).json({error: "No such email"});
-                    }
-                })
-                .catch(err => {
-                    console.log(err);
-                    return res.status(500).json({error: err.code});
-                });
+            return res.status(201).json({token});   
         })
         .catch(err => {
             console.error(err);
@@ -134,3 +122,20 @@ exports.userCourses = (req, res) => {
             return res.status(500).json({error: err.code});
         });
 };
+
+exports.userType = (req, res) => {
+    const { email } = req.body;
+    db.doc(`/users/${email}`).get()
+        .then(doc => {
+            if(doc.exists){
+                const { type } = doc.data();
+                return res.status(201).json({type});           
+            } else {
+                return res.status(404).json({error: "No such email"});
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            return res.status(500).json({error: err.code});
+        });
+}

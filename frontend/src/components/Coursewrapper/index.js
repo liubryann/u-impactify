@@ -4,8 +4,8 @@ import CourseCard from '../Coursecard'
 import GridList from "@material-ui/core/GridList";
 import Typography from '@material-ui/core/Typography';
 
-import { userCourseIds } from '../../redux/actions/userActions';
-import { connect } from 'react-redux';
+// import { userCourseIds } from '../../redux/actions/userActions';
+// import { connect, useSelector, shallowEqual } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -16,10 +16,11 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.background.paper,
         height: "100%",
         width: "100%",
+        margin: 'auto',
     },
     gridList: {
-        width: 6000,
-        height: 700,
+        height: "100%",
+        width: "100%"
     },
 }));
 
@@ -91,10 +92,12 @@ const courses = [
 
 function CourseWrapper(props) {
     const classes = useStyles();
-    props.userCourseIds(props.email, props.usertype)
-    const { userCourseIds } = props.courseIds;
-
-    if(!userCourseIds){
+    // const email = localStorage.getItem('email');
+    // console.log("coursewrapper " + props.userType);
+    // props.userCourseIds(email, props.userType)
+    // const userCourseIds = useSelector(state => state.user.userCourseIds, shallowEqual);
+    const courses = props.courses;
+    if(!courses){
         return (
             <div className={classes.root}>
                 <Typography variant='h6' align="center" color="textSecondary">
@@ -107,22 +110,20 @@ function CourseWrapper(props) {
     return (
         <div className={classes.root}>
             <GridList cellHeight={160} className={classes.gridList}>
-                {userCourseIds.map((userCourseId) => (
-                    <CourseCard courseId={userCourseId} />
-                ))}
+            {courses.map((course) => <CourseCard instructor={course.instructor} name={course.name} overview={course.overview}/>)}
+                {/* {userCourseIds.map((userCourseId) => (
+                    <CourseCard courseId={userCourseId}/>
+                ))} */}
             </GridList>
         </div>
     )
 }
 
-const mapStateToProps = (state) => ({
-    courseIds: state.user.userCourseIds,
-    email: state.auth.email,
-    usertype: state.auth.usertype
-});
+// const mapStateToProps = (state) => ({});
 
-const mapDispatchToProps = {
-    userCourseIds: userCourseIds
-};
+// const mapDispatchToProps = {
+//     userCourseIds: userCourseIds
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CourseWrapper);
+// export default connect(mapStateToProps, mapDispatchToProps)(CourseWrapper);
+export default CourseWrapper;

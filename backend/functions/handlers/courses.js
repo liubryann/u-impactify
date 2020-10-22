@@ -17,3 +17,25 @@ exports.getCourse = (req, res) => {
         });
         
 };
+
+exports.getAllCourses = (req, res) => {
+    db.collection('courses')
+        .get()
+        .then((data) => {
+            let courses = []; 
+            data.forEach((doc) => {
+                courses.push({
+                    courseId: doc.id, 
+                    instructor: doc.data().instructor, 
+                    name: doc.data().name, 
+                    overview: doc.data().overview
+                })
+            });
+            return res.json(courses);
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).json({ error: err.code })
+        })
+  
+}

@@ -17,6 +17,7 @@
     "react-scripts": "3.4.3",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0",
     "yup": "^0.29.3"
   },
   "scripts": {

@@ -8,16 +8,12 @@ export const loginUser = (userData, loginSuccess, loginFailure) => ( async dispa
     });
     await API.post('/login', userData)
         .then((response) => {
-            const { token, type } = response.data
+            const { token } = response.data
             if (token) {
-                const { email } = userData;
                 setAuthHeader(token);
+                saveToLocalStorage(token, userData.email);
                 dispatch({ 
-                    type: LOGIN_SUCCESS,
-                    payload: {
-                        type,
-                        email
-                    }
+                    type: LOGIN_SUCCESS
                  });
                 loginSuccess();
             } else {
@@ -47,6 +43,10 @@ const setAuthHeader = (token) => {
     axios.defaults.headers.common['Authorization'] = idToken;
   };
 
+const saveToLocalStorage = (token, email) => {
+    window.localStorage.setItem('idToken', token);
+    window.localStorage.setItem('email', email);
+}
 
 export const logoutUser = () => {
     localStorage.removeItem('idToken');
