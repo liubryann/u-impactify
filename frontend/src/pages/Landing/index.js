@@ -1,4 +1,5 @@
 import React from 'react'
+import Topbar from '../../components/topbar'
 import Bottombar from '../../components/Bottombar'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Grid from '@material-ui/core/Grid'
@@ -31,7 +32,7 @@ function Landing() {
   return (
     <Grid Container component='main' className={classes.root}>
       <CssBaseline />
-
+      <Topbar />
       <Grid item className={classes.image} />
       <Bottombar/>
     </Grid>

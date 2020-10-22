@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     top: 'auto',
     bottom: 0,
     color: '#000000',
-    background: '#E5E5E5CC',
+    background: '#dbd9d7',
     elevation: '0',
   }
 }));

@@ -17,6 +17,7 @@ import { connect } from 'react-redux';
 import * as Yup from 'yup';
 
 import { loginUser } from '../../redux/actions/authActions'
+import Topbar from '../../components/topbar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -66,6 +67,7 @@ const { loading, authErrors } = props.auth;
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
+      <Topbar />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
