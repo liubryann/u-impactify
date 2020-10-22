@@ -22,14 +22,13 @@ const useStyles = makeStyles((theme) => ({
     color: '#000000',
     background: '#dbd9d7',
     elevation: '0',
-    position: 'absolute'
   }
 }));
 
 function Bottombar() {
   const classes = useStyles();
   return (
-    <AppBar className={classes.botBar}>
+    <AppBar position="relative" className={classes.botBar}>
       <Toolbar>
         <IconButton edge="start" className={classes.insButton} color="inherit" aria-label="menu">
           <InstagramIcon />

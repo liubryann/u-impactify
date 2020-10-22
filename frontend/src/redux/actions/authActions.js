@@ -1,4 +1,4 @@
-import { LOGIN_START, LOGIN_SUCCESS, LOGIN_ERROR } from '../types';
+import {  LOGIN_START, LOGIN_SUCCESS, LOGIN_ERROR, SIGNUP_START, SIGNUP_ERROR, SIGNUP_SUCCESS } from '../types';
 import axios from 'axios';
 import API from '../../api';
 
@@ -36,6 +36,19 @@ export const loginUser = (userData, loginSuccess, loginFailure) => ( async dispa
             loginFailure();
         })
 });
+
+export const signupUser = (newUserData, history) => (async dispatch => {
+    dispatch({ type: SIGNUP_START });
+    await API.post('/signup', newUserData)
+        .then((res) => {
+        setAuthHeader(res.data.token);
+        dispatch({ type: SIGNUP_SUCCESS });
+        history.push('/home');
+        })
+        .catch ((err) => {
+        dispatch({ type: SIGNUP_ERROR, payload: err.response.data });
+        })
+  });
 
 const setAuthHeader = (token) => {
     const idToken = `Bearer ${token}`;

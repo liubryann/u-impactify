@@ -96,7 +96,7 @@ class Dashboard extends Component {
               </Paper>
             </Grid>
           </Grid>
-          <Bottombar />
+          <Bottombar position="sticky" />
         </div>
       )
     }

@@ -30,12 +30,15 @@ const useStyles = makeStyles((theme) => ({
 function Landing() {
   const classes = useStyles();
   return (
-    <Grid Container component='main' className={classes.root}>
-      <CssBaseline />
+    <div className={classes.root}>
       <Topbar />
-      <Grid item className={classes.image} />
-      <Bottombar/>
-    </Grid>
+      <Grid Container component='main' >
+        <CssBaseline />
+        <Grid item className={classes.image} />
+      </Grid>
+      <Bottombar />
+
+    </div>
   );
 }
 

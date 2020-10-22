@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 function Topbar() {
   const classes = useStyles();
   return (
-      <AppBar position="fixed" className={classes.appBar} elevation='0'>
+      <AppBar position="relative" className={classes.appBar} elevation='0'>
             <Toolbar>
                 <Box display="flex" flexGrow={1}>
                     <Typography variant="h6" className={classes.topBar}>
