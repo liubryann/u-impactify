@@ -3,6 +3,7 @@ const { validateSignupData, validateLoginData } = require('../util/validators');
 const { userTypes } = require('../util/constants');
 const { user } = require("firebase-functions/lib/providers/auth");
 const firebase = require("firebase");
+const config = require('../util/config');
 // Sign up 
 exports.signup = (req, res) => {
     const newUser = {
@@ -18,6 +19,7 @@ exports.signup = (req, res) => {
     const { valid, errors } = validateSignupData(newUser); 
     if(!valid) return res.status(400).json(errors); 
 
+    const defaultImg = 'defaultImg.jpg';
     let token, uid; 
     db.doc(`/users/${newUser.email}`).get()
         .then(doc => {
@@ -40,6 +42,8 @@ exports.signup = (req, res) => {
                     type: newUser.type,
                     org: newUser.org,
                     email: newUser.email,
+                    imageUrl: `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${defaultImg}?alt=media`,
+                    createdAt: new Date().toISOString(),
                     uid
                 };
             }
@@ -49,6 +53,8 @@ exports.signup = (req, res) => {
                     email: newUser.email,
                     first: newUser.first, 
                     last: newUser.last,
+                    imageUrl: `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${defaultImg}?alt=media`,
+                    createdAt: new Date().toISOString(),
                     uid
                 };
             }
