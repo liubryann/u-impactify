@@ -1,5 +1,5 @@
 import API from '../../api';
-import { USER_COURSE_IDS, USER_ERROR, USER_TYPE } from '../types';
+import { USER_COURSE_IDS, USER_ERROR, USER_TYPE, SET_USER } from '../types';
 
 
 export const userCourseIds = (email, usertype) => (async (dispatch) => {
@@ -63,3 +63,23 @@ export const userTypeDetails = () => (async (dispatch) => {
             });
         })
 });
+
+export const getAuthenticatedUserData = () => (async (dispatch) => {
+    await API.get('/getAuthenticatedUser', { headers: {
+        'Authorization': `Bearer ${localStorage.getItem('idToken')}`
+    }})
+        .then((res) => {
+            dispatch({
+                type: SET_USER,
+                payload: res.data
+            })
+        })
+        .catch(err => {
+            console.error(err);
+            dispatch({
+                type: USER_ERROR,
+                payload: { msg: err.response.data }
+            });
+        })
+ })
+ 

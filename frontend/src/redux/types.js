@@ -16,3 +16,4 @@ export const SET_COURSES = 'SET_COURSES';
 export const USER_COURSE_IDS = 'USER_COURSE_IDS';
 export const USER_ERROR = 'USER_ERROR';
 export const USER_TYPE = 'USER_TYPE';
+export const SET_USER = 'SET_USER';
