@@ -65,5 +65,35 @@ exports.validateLoginData = (data) => {
   }
 }
 
+exports.validateCourseCreation = (data) => {
+  let errors = {};
+
+  if (isEmpty(data.title)) {
+    errors.title = 'Must not be empty';
+  }
+  if (isEmpty(data.summary)) {
+    errors.summary = 'Must not be empty';
+  }
+  if (isEmpty(data.courseImageURL)) {
+    errors.courseImageURL = 'Must not be empty';
+  }
+  if (isEmpty(data.instructor)) {
+    errors.instructor = 'Must not be empty';
+  }
+  if (isEmpty(data.instructorImageURL)) {
+    errors.instructorImageURL = 'Must not be empty';
+  }
+  if (isEmpty(data.instructorEmail)) {
+    errors.instructorEmail = 'Must not be empty';
+  }
+  if(isEmpty(data.createdAt)){
+    errors.createdAt = 'Must not be empty';
+  }
+  return {
+    errors,
+    valid: Object.keys(errors).length === 0 ? true : false
+  }
+}
+
 
 
