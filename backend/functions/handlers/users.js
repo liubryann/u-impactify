@@ -1,5 +1,5 @@
 const { admin, db } = require("../util/admin");
-const { validateSignupData, validateLoginData } = require('../util/validators');
+const { validateSignupData, validateLoginData, validateUserDetails } = require('../util/validators');
 const { userTypes } = require('../util/constants');
 const { user } = require("firebase-functions/lib/providers/auth");
 const firebase = require("firebase");
@@ -161,4 +161,54 @@ exports.getAuthenticatedUser = (req, res) => {
             return res.status(500).json({ error: err.code });
         });
  }
+
+ exports.getUserDetails = (req, res) => {
+    const { email } = req.body.email
+    db.doc(`/users/${email}`)
+    .get()
+    .then(doc => {
+        if (doc.exists) {
+            let userDetails = {
+                first: doc.data().first,
+                last: doc.data().last,
+                intro: doc.data().intro,
+                skills: doc.data().skills,
+                email: doc.data().email,
+                imageUrl: doc.data().imageUrl,
+            };
+            return res.status(200).json(userDetails);
+        } else {
+            return res.status(404).json({ error: "Invalid user" });
+          }
+    }).catch(err => {
+        console.log(err);
+        return res.status(500).json({ error: err.code });
+      });
+    
+ }
  
+ exports.updateUserDetails = (req, res) => {
+    const newUserDetails = {
+        first: req.body.first,
+        last: req.body.last,
+        intro: req.body.intro,
+        skills: req.body.skills,
+        email: req.body.email,
+        imageUrl: req.body.imageUrl,
+    };
+
+    const { valid, errors } = validateUserDetails(newUserDetails);
+    if (!valid) return res.status(400).json(errors);
+
+    db.collection('users').doc(req.user.email)
+    .update(
+        newUserDetails
+    )
+    .then(() => {
+        return res.status(200).json()
+    })
+    .catch(err => {
+        console.error(err);
+        res.status(500).json({ error: err.code })
+    });
+ }
