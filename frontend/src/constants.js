@@ -4,4 +4,9 @@ const userTypes = {
   SOCIAL_INITIATIVE: "Social Initiative"
 }
 
-module.exports = { userTypes };
+const postTypes = {
+  OFFERING: "OFFERING A SERVICE",
+  ASKING: "ASKING FOR SUPPORT"
+}
+
+module.exports = { userTypes, postTypes };
