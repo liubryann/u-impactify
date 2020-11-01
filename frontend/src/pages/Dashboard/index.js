@@ -64,7 +64,7 @@ class Dashboard extends Component {
             <Grid item xs={6} className={classes.item}>
               <h1 className={classes.title}>My Courses</h1>
               <Paper className={classes.paper}>
-                <CourseWrapper courses={courses}/>
+                <CourseWrapper enrolled= {true} isStudent={true} courses={courses}/>
               </Paper>
             </Grid>
             <Grid item xs={6} className={classes.item}>
@@ -83,7 +83,7 @@ class Dashboard extends Component {
             <Grid item xs={5} className={classes.item}>
               <h1 className={classes.title}>My Courses</h1>
               <Paper className={classes.paper}>
-                <CourseWrapper courses={courses}/>
+                <CourseWrapper enrolled= {true} isStudent={false} courses={courses}/>
                 <div className={classes.preventOverflow}>
                  <CustomButton
                     tip="Create a new course"
@@ -112,7 +112,7 @@ class Dashboard extends Component {
             <Grid item xs={12} className={classes.item}>
               <h1 className={classes.title}>My Courses</h1>
               <Paper className={classes.paper}>
-                <CourseWrapper courses={courses} justify="space-evenly" />
+                <CourseWrapper courses={courses} enrolled= {true} isStudent={false} justify="space-evenly" />
               </Paper>
             </Grid>
           </Grid>

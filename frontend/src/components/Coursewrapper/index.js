@@ -110,7 +110,7 @@ function CourseWrapper(props) {
     return (
         <div className={classes.root}>
             <GridList cellHeight={160} className={classes.gridList}>
-            {courses.map((course) => <CourseCard course={course}/>)}
+            {courses.map((course, index) => <CourseCard key={index} course={course}/>)}
                 {/* {userCourseIds.map((userCourseId) => (
                     <CourseCard courseId={userCourseId}/>
                 ))} */}
