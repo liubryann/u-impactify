@@ -1,17 +1,22 @@
 import React, { Component } from 'react'
+import { connect, useSelector, shallowEqual } from 'react-redux';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import CourseWrapper from '../../components/Coursewrapper';
 import Typography from '@material-ui/core/Typography';
-import PropTypes from 'prop-types';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 
-import { connect, useSelector, shallowEqual } from 'react-redux';
-import store from '../../redux/store'
 import { userTypeDetails } from '../../redux/actions/userActions';
-import NavBar from "../../components/Navbar"
 import { getAllCourses } from '../../redux/actions/coursesActions';
+
+import NavBar from "../../components/Navbar"
 import Bottombar from "../../components/Bottombar"
+import CourseWrapper from '../../components/Coursewrapper';
+import CustomButton from '../../components/CustomButton'; 
+import { userTypes } from '../../constants';
 
 
 const styles = (theme) => ({
@@ -30,6 +35,12 @@ const styles = (theme) => ({
   },
   item: {
     paddingBottom: '0.5%',
+  }, 
+  createCourseBtn: {
+    float: 'right',
+  },
+  preventOverflow: {
+    overflow:'auto'
   }
 
 });
@@ -44,9 +55,8 @@ class Dashboard extends Component {
     const { courses } = this.props.courses;
     const { classes } = this.props;
     const { userType } = this.props.user;
-    console.log(courses);
 
-    if (userType === "IMPACT LEARNER") {
+    if (userType === userTypes.IMPACT_LEARNER) {
       return (
         <div className={classes.root}>
           <NavBar />
@@ -65,7 +75,7 @@ class Dashboard extends Component {
           <Bottombar />
         </div>
       )
-    } else if (userType === "IMPACT INSTRUCTOR") {
+    } else if (userType === userTypes.IMPACT_CONSULTANT) {
       return (
         <div className={classes.root}>
           <NavBar />
@@ -74,6 +84,16 @@ class Dashboard extends Component {
               <h1 className={classes.title}>My Courses</h1>
               <Paper className={classes.paper}>
                 <CourseWrapper courses={courses}/>
+                <div className={classes.preventOverflow}>
+                 <CustomButton
+                    tip="Create a new course"
+                    btnClassName={classes.createCourseBtn}
+                  >
+                    <Link to="/course-creation">
+                      <AddCircleIcon fontSize="large" color="primary"/>
+                    </Link>
+                  </CustomButton>
+                </div>
               </Paper>
             </Grid>
             <Grid item xs={5} className={classes.item}>
@@ -103,9 +123,6 @@ class Dashboard extends Component {
   }
 }
 
-// const mapStateToProps = (state) => ({});
-
-
 const mapDispatchToProps = {
   userTypeDetails: userTypeDetails,
   getAllCourses: getAllCourses
@@ -122,8 +139,5 @@ const mapStateToProps = (state) => ({
   courses: state.courses,
   user: state.user
 });
-
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Dashboard));

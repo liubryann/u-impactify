@@ -1,6 +1,6 @@
 import {  LOGIN_START, LOGIN_SUCCESS, LOGIN_ERROR, SIGNUP_START, SIGNUP_ERROR, SIGNUP_SUCCESS } from '../types';
-import axios from 'axios';
 import API from '../../api';
+import axios from 'axios';
 
 export const loginUser = (userData, loginSuccess, loginFailure) => ( async dispatch => { 
     dispatch({
@@ -53,7 +53,7 @@ export const signupUser = (newUserData, history) => (async dispatch => {
 const setAuthHeader = (token) => {
     const idToken = `Bearer ${token}`;
     window.localStorage.setItem('idToken', token);
-    axios.defaults.headers.common['Authorization'] = idToken;
+    API.defaults.headers.common['Authorization'] = idToken;
   };
 
 const saveToLocalStorage = (token, email) => {

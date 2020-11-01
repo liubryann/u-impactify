@@ -59,8 +59,10 @@ exports.getAllCourses = (req, res) => {
         courses.push({
           courseId: doc.id,
           instructor: doc.data().instructor,
-          name: doc.data().name,
-          overview: doc.data().overview
+          title: doc.data().title,
+          summary: doc.data().summary,
+          instructorImageURL: doc.data().instructorImageURL,
+          courseImageURL: doc.data().courseImageURL
         })
       });
       return res.json(courses);

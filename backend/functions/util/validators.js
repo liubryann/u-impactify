@@ -74,8 +74,11 @@ exports.validateCourseCreation = (data) => {
   if (isEmpty(data.summary)) {
     errors.summary = 'Must not be empty';
   }
+  else if (data.summary.length > 200) {
+    errors.summary = 'Summary must be less than 200 characters';
+  }
   if (isEmpty(data.courseImageURL)) {
-    errors.courseImageURL = 'Must not be empty';
+    errors.courseImageURL = 'Required';
   }
   if (isEmpty(data.instructor)) {
     errors.instructor = 'Must not be empty';
