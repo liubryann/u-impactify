@@ -7,6 +7,7 @@ import Landing from './pages/Landing';
 import Login from './pages/Login';
 import Signup from './pages/Signup'
 import Dashboard from './pages/Dashboard';
+import Courses from './pages/Courses';
 import CourseCreation from './pages/CourseCreation';
 //Redux
 import { isLoggedIn } from './redux/actions/authActions'
@@ -36,6 +37,7 @@ function App() {
                     <Route exact path="/" render={() => <Landing />} />
                     <Route exact path="/signup" component={Signup} />
                     <Route exact path="/home" render={() => isLoggedIn() ? <Dashboard /> : <Redirect to='/login'/>} />
+                    <Route exact path="/courses" render={() => isLoggedIn() ? <Courses /> : <Redirect to='/login'/>} />
                     <Route exact path="/course-creation" render={() => isLoggedIn() ? <CourseCreation /> : <Redirect to='/login'/> }/>
                 </Switch>
             </Router>
