@@ -17,7 +17,7 @@ firebase.initializeApp(config);
 // user routes
 app.post('/signup', signup);
 app.post('/login', login);
-app.post('/userCourses', userCourses);
+app.get('/userCourses', fbAuth, userCourses);
 app.post('/getCourse', getCourse)
 app.post('/userType', userType)
 app.get('/getAllCourses', getAllCourses);

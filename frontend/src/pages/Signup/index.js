@@ -19,7 +19,6 @@ import Select from "@material-ui/core/Select";
 import { FormHelperText } from "@material-ui/core";
 import Bottombar from '../../components/Bottombar'; 
 import Topbar from '../../components/topbar'; 
-import Box from '@material-ui/core/Box'
 
 // redux
 import { signupUser } from "../../redux/actions/authActions";

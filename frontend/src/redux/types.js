@@ -18,7 +18,7 @@ export const COURSE_CREATION_ERROR = 'COURSE_CREATION_ERROR';
 export const IMAGE_UPLOAD_SUCCESS = 'IMAGE_UPLOAD_SUCCESS';
 export const IMAGE_UPLOAD_ERROR = 'IMAGE_UPLOAD_ERROR';
 //User Types
-export const USER_COURSE_IDS = 'USER_COURSE_IDS';
+export const USER_COURSES = 'USER_COURSES';
 export const USER_ERROR = 'USER_ERROR';
 export const USER_TYPE = 'USER_TYPE';
 export const SET_USER = 'SET_USER';
