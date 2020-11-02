@@ -54,7 +54,7 @@ export default function NavBar() {
           <Button className={classes.button}>
             <Typography>Giving Garden</Typography>
           </Button>
-          <Button className={classes.button}>
+          <Button className={classes.button} onClick={() => (window.location.href = '/courses')}>
             <Typography>Courses</Typography>
           </Button>
           <Button className={classes.button}>

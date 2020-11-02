@@ -8,6 +8,8 @@ import Login from './pages/Login';
 import Signup from './pages/Signup'
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
+import Courses from './pages/Courses';
+import CourseCreation from './pages/CourseCreation';
 //Redux
 import { isLoggedIn } from './redux/actions/authActions'
 
@@ -21,23 +23,28 @@ const theme = createMuiTheme({
       default: '#fafafa',
       paper: '#fff',
     },
+    text: {
+      primary: 'rgba(0, 0, 0, 0.70)'
+    },
   },
 });
 
 function App() {
-  return (
-    <ThemeProvider theme={theme}>
-      <Router>
-        <Switch>
-          <Route exact path="/login" render={() => <Login />} />
-          <Route exact path="/" render={() => <Landing />} />
-          <Route exact path="/signup" component={Signup} />
-          <Route exact path="/home" render={() => isLoggedIn() ? <Dashboard /> : <Redirect to='/login' />} />
-          <Route exact path="/profile" render={() => <Profile />} />
-        </Switch>
-      </Router>
-    </ThemeProvider>
-  );
+    return (
+        <ThemeProvider theme={theme}>
+            <Router>
+                <Switch>
+                    <Route exact path="/login" render={() => <Login />} />
+                    <Route exact path="/" render={() => <Landing />} />
+                    <Route exact path="/signup" component={Signup} />
+                    <Route exact path="/home" render={() => isLoggedIn() ? <Dashboard /> : <Redirect to='/login'/>} />
+                    <Route exact path="/courses" render={() => isLoggedIn() ? <Courses /> : <Redirect to='/login'/>} />
+                    <Route exact path="/course-creation" render={() => isLoggedIn() ? <CourseCreation /> : <Redirect to='/login'/> }/>
+                    <Route exact path="/profile" render={() => <Profile />} />
+                </Switch>
+            </Router>
+        </ThemeProvider>
+    );
 }
 
 export default App;
