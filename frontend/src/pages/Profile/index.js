@@ -55,28 +55,39 @@ const styles = (theme) => ({
 });
 
 class Profile extends Component {
-    componentDidMount(){
-        console.log("component did mount");
-        this.props.getAuthenticatedUserData();
+    constructor() {
+        super();
+        this.state = {
+            name: "",
+            email: "",
+            imageURL: ""       
+        };
+    }
+    async componentDidMount(){
+        await this.props.getAuthenticatedUserData();
+        const { credentials } = this.props.user.userData;
+        this.setState({
+            name: `${credentials.first} ${credentials.last}`,
+            email: credentials.email,
+            imageURL: credentials.imageUrl
+        })
     }
 
     render () {
         const { classes } = this.props;
-        const { userDetails } = this.props.user
-        console.log(store.getState());
         return(
             <div>
                 <NavBar/>
                 <Box className={classes.root}>
                     <Box className={classes.profile}>
                         <Box pt={10} pb={4} p={15}>
-                            <Avatar alt="Bob" className={classes.userIcon}/>
+                            <Avatar src={this.state.imageURL} className={classes.userIcon}/>
                         </Box>
                         <Box p={1}>
-                            <Typography variant="h5"> {userDetails.name} </Typography>
+                            <Typography variant="h5"> {this.state.name} </Typography>
                         </Box>
                         <Box p={1}>
-                            <Typography variant="h5"> {userDetails.email} </Typography>
+                            <Typography variant="h5"> {this.state.email} </Typography>
                         </Box>
                     </Box>
                     <Box mt={10} ml={5} mr={3} p={5} flexGrow={1} className={classes.roundBox}>
