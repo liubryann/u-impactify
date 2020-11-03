@@ -100,7 +100,11 @@ export default function PostWrapper(props) {
     return (
         <div className={classes.root}>
             <Grid container>
-                    {posts.map((course) => <Post title={course.title} postType={course.postType} postContent={course.postContent}/>)}
+                    { posts.filter((post) => 
+                        props.postType ? post.postType === props.postType : post
+                    ).filter((post) => post.title.includes(props.searchTitle))
+                    .slice(0,props.postLimit)
+                    .map((course) => <Post title={course.title} postType={course.postType} postContent={course.postContent}/>) }
             </Grid>
         </div>
     )

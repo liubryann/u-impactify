@@ -51,7 +51,7 @@ export default function NavBar() {
           <Button className={classes.button}>
             <Typography>Dashboard</Typography>
           </Button>
-          <Button className={classes.button}>
+          <Button className={classes.button} onClick={() => (window.location.href = '/giving-garden')}>
             <Typography>Giving Garden</Typography>
           </Button>
           <Button className={classes.button} onClick={() => (window.location.href = '/courses')}>

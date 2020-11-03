@@ -9,6 +9,7 @@ import Signup from './pages/Signup'
 import Dashboard from './pages/Dashboard';
 import Courses from './pages/Courses';
 import CourseCreation from './pages/CourseCreation';
+import GivingGarden from './pages/GivingGarden';
 //Redux
 import { isLoggedIn } from './redux/actions/authActions'
 
@@ -39,6 +40,7 @@ function App() {
                     <Route exact path="/home" render={() => isLoggedIn() ? <Dashboard /> : <Redirect to='/login'/>} />
                     <Route exact path="/courses" render={() => isLoggedIn() ? <Courses /> : <Redirect to='/login'/>} />
                     <Route exact path="/course-creation" render={() => isLoggedIn() ? <CourseCreation /> : <Redirect to='/login'/> }/>
+                    <Route exact path="/giving-garden" render={() => isLoggedIn() ? <GivingGarden/> : <Redirect to='/login'/>}/>
                 </Switch>
             </Router>
         </ThemeProvider>
