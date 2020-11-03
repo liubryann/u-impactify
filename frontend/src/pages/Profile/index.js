@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import Box from '@material-ui/core/Box'
+import InputBase from '@material-ui/core/InputBase'
+import Grid from '@material-ui/core/Grid'
 import withStyles from "@material-ui/core/styles/withStyles";
 import NavBar from '../../components/Navbar'
-import { Typography } from '@material-ui/core'
+import { Button, Container, Typography } from '@material-ui/core'
 
 import { connect } from 'react-redux';
 import { getAuthenticatedUserData } from '../../redux/actions/userActions';
@@ -48,6 +50,7 @@ const styles = (theme) => ({
         backgroundColor: "#DDDDDD"
     },
     userIcon: {
+        border: '2px solid',
         width: theme.spacing(25),
         height: theme.spacing(25),
         padding: '30px',
@@ -69,7 +72,9 @@ class Profile extends Component {
         this.setState({
             name: `${credentials.first} ${credentials.last}`,
             email: credentials.email,
-            imageURL: credentials.imageUrl
+            imageURL: credentials.imageUrl,
+            skills: credentials.skills,
+            intro: credentials.intro
         })
     }
 
@@ -92,16 +97,24 @@ class Profile extends Component {
                     </Box>
                     <Box mt={10} ml={5} mr={3} p={5} flexGrow={1} className={classes.roundBox}>
                         <Box>
-                            <Typography variant="h4"> Who am I? </Typography>
+                            <Typography variant="h4"> Skills </Typography>
                         </Box>
                         <Box mt={2} p={2}  className={classes.who}>
-                            <Typography variant="h4"> I don't even know who I am </Typography>
+                            <InputBase defaultValue={this.state.skills} fullWidth multiline rowsMax='2' inputProps={{style: {fontSize: 30, lineHeight: 1.2}}}/>
                         </Box>
-                        <Box pt={7}>
+                        <Box pt={3}>
                             <Typography variant="h4"> Introduction </Typography>
                         </Box>
-                        <Box mt={2} p={2} mb={3} className={classes.intro}>
-                            <Typography variant="h4"> I want coffee </Typography>
+                        <Box mt={2} p={2} mb={4} className={classes.intro}>
+                            <InputBase defaultValue={this.state.intro} fullWidth multiline rowsMax='4' inputProps={{style: {fontSize: 30, lineHeight: 1.2}}}/>
+                        </Box>
+                        <Box display='flex' flexDirection='row' justifyContent='flex-end'>
+                            <Box pr={2}>
+                                <Button>Cancel</Button>
+                            </Box>
+                            <Box pr={2}>
+                                <Button variant="contained" color="primary">Save</Button>
+                            </Box>
                         </Box>
                     </Box>
                 </Box>

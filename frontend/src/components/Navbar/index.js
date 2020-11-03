@@ -64,7 +64,9 @@ export default function NavBar() {
           <Button className={classes.signout} onClick={() => {logoutUser(); window.location.href='/login';}}>
             <Typography>Sign out</Typography>
           </Button>
-          <Avatar alt="Bob" className={classes.large}/>
+          <Button onClick={() => (window.location.href = '/profile')}>
+            <Avatar alt="Bob" className={classes.large}/>
+          </Button>
         </Toolbar>
       </AppBar>
     </div>
