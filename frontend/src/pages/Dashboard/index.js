@@ -1,16 +1,15 @@
 import React, { Component } from 'react'
-import { connect, useSelector, shallowEqual } from 'react-redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 import { userTypeDetails } from '../../redux/actions/userActions';
-import { getAllCourses } from '../../redux/actions/coursesActions';
+import { userCourses } from '../../redux/actions/userActions';
 
 import NavBar from "../../components/Navbar"
 import Bottombar from "../../components/Bottombar"
@@ -47,12 +46,12 @@ const styles = (theme) => ({
 
 class Dashboard extends Component {
   componentDidMount() {
-    this.props.getAllCourses();
+    this.props.userCourses();
     this.props.userTypeDetails();
   }
 
   render() {
-    const { courses } = this.props.courses;
+    const { userCourses } = this.props.user;
     const { classes } = this.props;
     const { userType } = this.props.user;
 
@@ -64,7 +63,7 @@ class Dashboard extends Component {
             <Grid item xs={6} className={classes.item}>
               <h1 className={classes.title}>My Courses</h1>
               <Paper className={classes.paper}>
-                <CourseWrapper enrolled= {true} isStudent={true} courses={courses}/>
+                <CourseWrapper enrolled= {true} isStudent={true} courses={userCourses}/>
               </Paper>
             </Grid>
             <Grid item xs={6} className={classes.item}>
@@ -83,7 +82,7 @@ class Dashboard extends Component {
             <Grid item xs={5} className={classes.item}>
               <h1 className={classes.title}>My Courses</h1>
               <Paper className={classes.paper}>
-                <CourseWrapper enrolled= {true} isStudent={false} courses={courses}/>
+                <CourseWrapper enrolled= {true} isStudent={false} courses={userCourses}/>
                 <div className={classes.preventOverflow}>
                  <CustomButton
                     tip="Create a new course"
@@ -112,7 +111,7 @@ class Dashboard extends Component {
             <Grid item xs={12} className={classes.item}>
               <h1 className={classes.title}>My Courses</h1>
               <Paper className={classes.paper}>
-                <CourseWrapper courses={courses} enrolled= {true} isStudent={false} justify="space-evenly" />
+                <CourseWrapper courses={userCourses} enrolled= {true} isStudent={false} justify="space-evenly" />
               </Paper>
             </Grid>
           </Grid>
@@ -125,18 +124,16 @@ class Dashboard extends Component {
 
 const mapDispatchToProps = {
   userTypeDetails: userTypeDetails,
-  getAllCourses: getAllCourses
+  userCourses: userCourses
 };
 
 Dashboard.propTypes = {
-  getAllCourses: PropTypes.func.isRequired,
+  userCourses: PropTypes.func.isRequired,
   userTypeDetails: PropTypes.func.isRequired,
-  courses: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired
 }
 
 const mapStateToProps = (state) => ({
-  courses: state.courses,
   user: state.user
 });
 

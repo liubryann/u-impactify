@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import './App.css';
@@ -10,6 +10,7 @@ import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import Courses from './pages/Courses';
 import CourseCreation from './pages/CourseCreation';
+import GivingGarden from './pages/GivingGarden';
 //Redux
 import { isLoggedIn } from './redux/actions/authActions'
 
@@ -41,6 +42,7 @@ function App() {
                     <Route exact path="/courses" render={() => isLoggedIn() ? <Courses /> : <Redirect to='/login'/>} />
                     <Route exact path="/course-creation" render={() => isLoggedIn() ? <CourseCreation /> : <Redirect to='/login'/> }/>
                     <Route exact path="/profile" render={() => <Profile />} />
+                    <Route exact path="/giving-garden" render={() => isLoggedIn() ? <GivingGarden/> : <Redirect to='/login'/>}/>
                 </Switch>
             </Router>
         </ThemeProvider>

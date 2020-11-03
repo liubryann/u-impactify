@@ -1,21 +1,17 @@
 import API from '../../api';
-import { USER_COURSE_IDS, USER_ERROR, USER_TYPE, SET_USER, UPDATE_USER, UPLOAD_USER_IMAGE } from '../types';
+import { USER_ERROR, USER_TYPE, SET_USER, UPDATE_USER, UPLOAD_USER_IMAGE } from '../types';
 
 
-export const userCourseIds = (email, usertype) => (async (dispatch) => {
-    const userData = {
-        email: email,
-        usertype: usertype
-    }
-
-    await API.post('/userCourses', userData)
+export const userCourses = () => (async (dispatch) => {
+    await API.get('/userCourses', {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('idToken')}`
+        }
+      })
         .then((response) => {
-            const { courses } = response.data;
             dispatch({ 
-                type: USER_COURSE_IDS,
-                payload: {
-                    courses
-                }
+                type: USER_COURSES,
+                payload: response.data
              });
         })
         .catch((err) => {

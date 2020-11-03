@@ -8,7 +8,9 @@ const defaultCourseImg = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAACo
 
 const postTypes = {
   OFFERING: "OFFERING A SERVICE",
-  ASKING: "ASKING FOR SUPPORT"
+  ASKING: "ASKING FOR SUPPORT",
+  OFFERING_STR: "OFFERING",
+  ASKING_STR: "ASKING"
 }
 
 module.exports = { userTypes, postTypes, defaultCourseImg };

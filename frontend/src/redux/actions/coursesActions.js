@@ -78,7 +78,6 @@ export const submitCourse = (newCourseData, history) => (async dispatch => {
     }
   })
     .then((res) => {
-      const courseId = res.data.courseId;
       dispatch({
         type: COURSE_CREATION_SUCCESS,
         payload: res.data

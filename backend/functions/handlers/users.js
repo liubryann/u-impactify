@@ -105,29 +105,41 @@ exports.login = (req, res) => {
 
 };
 
-exports.userCourses = (req, res) => {
-    const { email, usertype } = req.body;
-    if( usertype === userTypes.SOCIAL_INITIATIVE) {
-        return res.status(500).json({error: "No Courses"});
-    }
-    const userData = [];
-    db.collection(`/users/${email}/courses`).get()
-        .then(querySnapshot => {
-            if(querySnapshot.empty){
-                return res.status(404).json({error: "No Courses"});
-            }
-            querySnapshot.docs.forEach((doc) => {
-                if(doc.exists){
-                    userData.push(doc.id);
-                }
+function getCourseFromId(id) {
+    return new Promise((resolve) => {
+        db.doc(`/courses/${id}`).get()
+            .then((coursesSnap) => {
+                resolve({
+                courseId: id,
+                instructor: coursesSnap.data().instructor,
+                title: coursesSnap.data().title,
+                summary: coursesSnap.data().summary,
+                instructorImageURL: coursesSnap.data().instructorImageURL,
+                courseImageURL: coursesSnap.data().courseImageURL
             })
-            return res.status(201).json({courses: userData});
-        })
-        .catch(err => {
-            console.log(err);
-            return res.status(500).json({error: err.code});
         });
-};
+    });
+}
+
+exports.userCourses = async(req, res) => {
+    const promises = [];
+    db.collection(`/users/${req.user.email}/courses`).get()
+    .then((snapshot) => {
+        if(!snapshot.empty){
+                for(const doc of snapshot.docs){
+                    promises.push(getCourseFromId(doc.id));
+                }
+        }
+    })
+    .then(()=>{
+        Promise.all(promises).then((values) =>{
+            return res.status(200).send(values);
+        })
+    })
+    .catch((err) => {
+        return res.status(500).send({error:err.code});
+    })
+}
 
 exports.userType = (req, res) => {
     const { email } = req.body;
@@ -209,3 +221,4 @@ exports.getAuthenticatedUser = (req, res) => {
         res.status(500).json({ error: err.code })
     });
  }
+ 
