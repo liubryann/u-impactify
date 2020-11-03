@@ -1,15 +1,17 @@
 import React, { Component } from 'react'
 import Avatar from '@material-ui/core/Avatar'
 import Box from '@material-ui/core/Box'
+import CustomButton from '../../components/CustomButton'
+import EditIcon from '@material-ui/icons/Edit'
 import InputBase from '@material-ui/core/InputBase'
 import Grid from '@material-ui/core/Grid'
-import withStyles from "@material-ui/core/styles/withStyles";
+import withStyles from "@material-ui/core/styles/withStyles"
 import NavBar from '../../components/Navbar'
 import { Button, Container, Typography } from '@material-ui/core'
 
 import { connect } from 'react-redux';
-import { getAuthenticatedUserData } from '../../redux/actions/userActions';
-import store from '../../redux/store';
+import { getAuthenticatedUserData, updateUserDetails } from '../../redux/actions/userActions'
+import { uploadImage } from '../../redux/actions/coursesActions';
 // Link to the dashboard!
 const styles = (theme) => ({
     root: {
@@ -78,53 +80,96 @@ class Profile extends Component {
         })
     }
 
+    handleSubmit = (event) => {
+        event.preventDefault();
+        const skills = document.getElementById('skills').value;
+        const intro = document.getElementById('intro').value;
+        const userDetails = {
+          skills: skills,
+          intro: intro,
+          imageUrl: this.state.imageURL
+        }
+        this.props.updateUserDetails(userDetails);
+      }
+
+    handleImageUpload = async (event) => {
+        console.log("in handleImageButton");
+        const image = event.target.files[0];
+        const formData = new FormData();
+        formData.append('image', image, image.name); 
+        await this.props.uploadImage(formData);
+        this.setState({
+            imageURL: this.props.user.userData.credentials.imageUrl
+        })
+        console.log(this.state.imageURL);
+    }
+
+    handleUploadButton = () => {
+        console.log("in handleUploadButton");
+        const fileInput = document.getElementById('uploadImage');
+        fileInput.click();
+    }
+
     render () {
         const { classes } = this.props;
         return(
             <div>
                 <NavBar/>
-                <Box className={classes.root}>
-                    <Box className={classes.profile}>
-                        <Box pt={10} pb={4} p={15}>
-                            <Avatar src={this.state.imageURL} className={classes.userIcon}/>
-                        </Box>
-                        <Box p={1}>
-                            <Typography variant="h5"> {this.state.name} </Typography>
-                        </Box>
-                        <Box p={1}>
-                            <Typography variant="h5"> {this.state.email} </Typography>
-                        </Box>
-                    </Box>
-                    <Box mt={10} ml={5} mr={3} p={5} flexGrow={1} className={classes.roundBox}>
-                        <Box>
-                            <Typography variant="h4"> Skills </Typography>
-                        </Box>
-                        <Box mt={2} p={2}  className={classes.who}>
-                            <InputBase defaultValue={this.state.skills} fullWidth multiline rowsMax='2' inputProps={{style: {fontSize: 30, lineHeight: 1.2}}}/>
-                        </Box>
-                        <Box pt={3}>
-                            <Typography variant="h4"> Introduction </Typography>
-                        </Box>
-                        <Box mt={2} p={2} mb={4} className={classes.intro}>
-                            <InputBase defaultValue={this.state.intro} fullWidth multiline rowsMax='4' inputProps={{style: {fontSize: 30, lineHeight: 1.2}}}/>
-                        </Box>
-                        <Box display='flex' flexDirection='row' justifyContent='flex-end'>
-                            <Box pr={2}>
-                                <Button>Cancel</Button>
+                <form
+                    noValidate
+                    onSubmit={this.handleSubmit}
+                >
+                    <Box className={classes.root}>
+                        <Box className={classes.profile}>
+                            <Box pt={10} pb={1} p={15}>
+                                <Avatar src={this.state.imageURL} className={classes.userIcon}/>
                             </Box>
-                            <Box pr={2}>
-                                <Button variant="contained" color="primary">Save</Button>
+                            <input type="file" id="uploadImage" hidden="hidden" onChange={this.handleImageUpload}/>
+                            <CustomButton tip="Upload a Profile Image" onClick={this.handleUploadButton}>
+                                <EditIcon color="primary"/>
+                            </CustomButton>
+                            <Box pt={3} p={1}>
+                                <Typography variant="h5"> {this.state.name} </Typography>
+                            </Box>
+                            <Box p={1}>
+                                <Typography variant="h5"> {this.state.email} </Typography>
                             </Box>
                         </Box>
+                        <Box flexGrow={1} height='100%'>
+                            <Box mt={10} ml={5} mr={3} p={5} flexGrow={1} className={classes.roundBox}>
+                                <Box>
+                                    <Typography variant="h4"> Skills </Typography>
+                                </Box>
+                                <Box mt={2} p={2}  className={classes.who}>
+                                    <InputBase id="skills" defaultValue={this.state.skills} fullWidth multiline rowsMax='2' inputProps={{style: {fontSize: 30, lineHeight: 1.2}}}/>
+                                </Box>
+                                <Box pt={3}>
+                                    <Typography variant="h4"> Introduction </Typography>
+                                </Box>
+                                <Box mt={2} p={2} mb={4} className={classes.intro}>
+                                    <InputBase id="intro" defaultValue={this.state.intro} fullWidth multiline rowsMax='4' inputProps={{style: {fontSize: 30, lineHeight: 1.2}}}/>
+                                </Box>
+                            </Box>
+                            <Box pt={4} pr={6} display='flex' flexDirection='row' justifyContent='flex-end'>
+                                <Box pr={2}>
+                                    <Button onClick={() => (window.location.href = '/profile')}>Cancel</Button>
+                                </Box>
+                                <Box pr={2}>
+                                    <Button type="submit" variant="contained" color="primary">Save</Button>
+                                </Box>
+                            </Box>
+                        </Box>
                     </Box>
-                </Box>
+                </form>
             </div>
         )
     }
 }
 
 const mapDispatchToProps = {
-    getAuthenticatedUserData: getAuthenticatedUserData
+    getAuthenticatedUserData: getAuthenticatedUserData,
+    updateUserDetails: updateUserDetails,
+    uploadImage: uploadImage
 };
 
 const mapStateToProps = (state) => ({

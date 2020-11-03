@@ -22,3 +22,5 @@ export const USER_COURSE_IDS = 'USER_COURSE_IDS';
 export const USER_ERROR = 'USER_ERROR';
 export const USER_TYPE = 'USER_TYPE';
 export const SET_USER = 'SET_USER';
+export const UPDATE_USER = 'UPDATE_USER'
+export const UPLOAD_USER_IMAGE = 'UPLOAD_USER_IMAGE';

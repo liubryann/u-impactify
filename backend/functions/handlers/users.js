@@ -189,13 +189,11 @@ exports.getAuthenticatedUser = (req, res) => {
  
  exports.updateUserDetails = (req, res) => {
     const newUserDetails = {
-        first: req.body.first,
-        last: req.body.last,
         intro: req.body.intro,
         skills: req.body.skills,
-        email: req.body.email,
         imageUrl: req.body.imageUrl,
     };
+    console.log(newUserDetails);
 
     const { valid, errors } = validateUserDetails(newUserDetails);
     if (!valid) return res.status(400).json(errors);

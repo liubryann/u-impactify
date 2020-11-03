@@ -101,15 +101,6 @@ exports.validateCourseCreation = (data) => {
 exports.validateUserDetails = (data) => {
   let errors = {};
 
-  if (isEmpty(data.first)) {
-    errors.first = 'Must not be empty';
-  }
-  if (isEmpty(data.last)) {
-    errors.last = 'Must not be empty';
-  }
-  if (isEmpty(data.email)) {
-    errors.email = 'Must not be empty';
-  }
   if (isEmpty(data.imageUrl)) {
     errors.imageUrl = 'Must not be empty';
   }
