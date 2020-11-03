@@ -7,7 +7,6 @@ export const userCourseIds = (email, usertype) => (async (dispatch) => {
         email: email,
         usertype: usertype
     }
-    console.log(userData);
 
     await API.post('/userCourses', userData)
         .then((response) => {

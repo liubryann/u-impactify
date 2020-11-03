@@ -4,7 +4,8 @@ const initialState = {
     userType: null,
     userCourseIds: [],
     errors: null,
-    userData: null, 
+    userData: null,
+    userImageURL: null 
 }
 
 export default function(state = initialState, action){
@@ -33,13 +34,7 @@ export default function(state = initialState, action){
         case UPLOAD_USER_IMAGE:
             return {
                 ...state,
-                userData: {
-                    ...userData,
-                    credentials: {
-                        ...credentials,
-                        imageUrl: action.payload.imageUrl
-                    }
-                }
+                userImageURL: action.payload.imageUrl
             }
         default:
             return state

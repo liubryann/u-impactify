@@ -193,7 +193,6 @@ exports.getAuthenticatedUser = (req, res) => {
         skills: req.body.skills,
         imageUrl: req.body.imageUrl,
     };
-    console.log(newUserDetails);
 
     const { valid, errors } = validateUserDetails(newUserDetails);
     if (!valid) return res.status(400).json(errors);

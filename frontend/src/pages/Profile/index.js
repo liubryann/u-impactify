@@ -4,14 +4,12 @@ import Box from '@material-ui/core/Box'
 import CustomButton from '../../components/CustomButton'
 import EditIcon from '@material-ui/icons/Edit'
 import InputBase from '@material-ui/core/InputBase'
-import Grid from '@material-ui/core/Grid'
 import withStyles from "@material-ui/core/styles/withStyles"
 import NavBar from '../../components/Navbar'
-import { Button, Container, Typography } from '@material-ui/core'
+import { Button, Typography } from '@material-ui/core'
 
 import { connect } from 'react-redux';
-import { getAuthenticatedUserData, updateUserDetails } from '../../redux/actions/userActions'
-import { uploadImage } from '../../redux/actions/coursesActions';
+import { getAuthenticatedUserData, updateUserDetails, uploadUserImage } from '../../redux/actions/userActions'
 // Link to the dashboard!
 const styles = (theme) => ({
     root: {
@@ -52,10 +50,8 @@ const styles = (theme) => ({
         backgroundColor: "#DDDDDD"
     },
     userIcon: {
-        border: '2px solid',
         width: theme.spacing(25),
         height: theme.spacing(25),
-        padding: '30px',
     },
 });
 
@@ -90,22 +86,20 @@ class Profile extends Component {
           imageUrl: this.state.imageURL
         }
         this.props.updateUserDetails(userDetails);
+        window.location.reload();
       }
 
     handleImageUpload = async (event) => {
-        console.log("in handleImageButton");
         const image = event.target.files[0];
         const formData = new FormData();
         formData.append('image', image, image.name); 
-        await this.props.uploadImage(formData);
+        await this.props.uploadUserImage(formData);
         this.setState({
-            imageURL: this.props.user.userData.credentials.imageUrl
+            imageURL: this.props.user.userImageURL
         })
-        console.log(this.state.imageURL);
     }
 
     handleUploadButton = () => {
-        console.log("in handleUploadButton");
         const fileInput = document.getElementById('uploadImage');
         fileInput.click();
     }
@@ -152,7 +146,7 @@ class Profile extends Component {
                             </Box>
                             <Box pt={4} pr={6} display='flex' flexDirection='row' justifyContent='flex-end'>
                                 <Box pr={2}>
-                                    <Button onClick={() => (window.location.href = '/profile')}>Cancel</Button>
+                                    <Button onClick={() => (window.location.reload())}>Cancel</Button>
                                 </Box>
                                 <Box pr={2}>
                                     <Button type="submit" variant="contained" color="primary">Save</Button>
@@ -169,7 +163,7 @@ class Profile extends Component {
 const mapDispatchToProps = {
     getAuthenticatedUserData: getAuthenticatedUserData,
     updateUserDetails: updateUserDetails,
-    uploadImage: uploadImage
+    uploadUserImage: uploadUserImage
 };
 
 const mapStateToProps = (state) => ({
