@@ -201,11 +201,8 @@ exports.getAuthenticatedUser = (req, res) => {
  
  exports.updateUserDetails = (req, res) => {
     const newUserDetails = {
-        first: req.body.first,
-        last: req.body.last,
         intro: req.body.intro,
         skills: req.body.skills,
-        email: req.body.email,
         imageUrl: req.body.imageUrl,
     };
 

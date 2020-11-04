@@ -7,6 +7,7 @@ import Landing from './pages/Landing';
 import Login from './pages/Login';
 import Signup from './pages/Signup'
 import Dashboard from './pages/Dashboard';
+import Profile from './pages/Profile';
 import Courses from './pages/Courses';
 import CourseCreation from './pages/CourseCreation';
 import GivingGarden from './pages/GivingGarden';
@@ -40,6 +41,7 @@ function App() {
                     <Route exact path="/home" render={() => isLoggedIn() ? <Dashboard /> : <Redirect to='/login'/>} />
                     <Route exact path="/courses" render={() => isLoggedIn() ? <Courses /> : <Redirect to='/login'/>} />
                     <Route exact path="/course-creation" render={() => isLoggedIn() ? <CourseCreation /> : <Redirect to='/login'/> }/>
+                    <Route exact path="/profile" render={() => <Profile />} />
                     <Route exact path="/giving-garden" render={() => isLoggedIn() ? <GivingGarden/> : <Redirect to='/login'/>}/>
                 </Switch>
             </Router>

@@ -1,10 +1,11 @@
-import { USER_ERROR, USER_TYPE, SET_USER, USER_COURSES } from '../types';
+import { USER_COURSES, USER_ERROR, USER_TYPE, SET_USER, UPDATE_USER, UPLOAD_USER_IMAGE } from '../types';
 
 const initialState = {
     userType: null,
     userCourses: [],
     errors: null,
-    userData: null, 
+    userData: null,
+    userImageURL: null 
 }
 
 export default function(state = initialState, action){
@@ -29,6 +30,15 @@ export default function(state = initialState, action){
                 ...state,
                 userData: action.payload,
                 errors: {}
+            }
+        case UPDATE_USER:
+            return {
+                ...state
+            }
+        case UPLOAD_USER_IMAGE:
+            return {
+                ...state,
+                userImageURL: action.payload.imageUrl
             }
         default:
             return state

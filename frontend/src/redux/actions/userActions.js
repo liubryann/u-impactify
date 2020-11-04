@@ -1,5 +1,5 @@
 import API from '../../api';
-import { USER_COURSES, USER_ERROR, USER_TYPE, SET_USER } from '../types';
+import { USER_ERROR, USER_TYPE, SET_USER, UPDATE_USER, UPLOAD_USER_IMAGE, USER_COURSES } from '../types';
 
 
 export const userCourses = () => (async (dispatch) => {
@@ -77,4 +77,48 @@ export const getAuthenticatedUserData = () => (async (dispatch) => {
             });
         })
  })
+
+ export const updateUserDetails = (userData) => (async (dispatch) => {
+    await API.put('/updateUserDetails', userData, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('idToken')}`
+        }
+      })
+        .then(() => {
+          dispatch({
+            type: UPDATE_USER
+          })
+        })
+        .catch(err => {
+          dispatch({
+            type: USER_ERROR,
+            payload: { msg: err.response.data }  
+          })
+        })
+ })
+
+ export const uploadUserImage = (formData) => (async dispatch => {
+    await API.post('/uploadImage', formData, {
+      headers: {
+        'Authorization': `Bearer ${localStorage.getItem('idToken')}`
+      }
+    })
+      .then((res) => {
+        dispatch({
+          type: UPLOAD_USER_IMAGE,
+          payload: res.data
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        let msg = '';
+        if (err.response) {
+          msg = err.response.data.error;
+        }
+        dispatch({
+          type: USER_ERROR,
+          payload: msg
+        })
+      });
+  });
  
