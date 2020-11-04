@@ -3,55 +3,44 @@ import Avatar from '@material-ui/core/Avatar'
 import Box from '@material-ui/core/Box'
 import CustomButton from '../../components/CustomButton'
 import EditIcon from '@material-ui/icons/Edit'
+import Grid from '@material-ui/core/Grid'
 import InputBase from '@material-ui/core/InputBase'
+import Paper from '@material-ui/core/Paper'
 import withStyles from "@material-ui/core/styles/withStyles"
 import NavBar from '../../components/Navbar'
-import { Button, Typography } from '@material-ui/core'
+import { Button, TextField, Typography } from '@material-ui/core'
 
 import { connect } from 'react-redux';
 import { getAuthenticatedUserData, updateUserDetails, uploadUserImage } from '../../redux/actions/userActions'
-// Link to the dashboard!
+
 const styles = (theme) => ({
     root: {
         height: "100%",
-        width: "100%",
-        display: "flex",
-        flexDirection: "row",
-        color: "#666666"
     },
     profile: {
-        height: "100%",
+        padding: theme.spacing(4),
+        height: "90%",
         display: "flex",
         flexDirection: "column",
         alignItems: "center"
     },
-    roundBox: {
-        height: "100%",
-        // width: "53%",
-        display: "flex",
-        flexDirection: "column",
-        alignitems: "center",
-        border: '3px solid',
-        borderRadius: 50,
-        borderColor: "#AAAAAA"
-    },
-    who: {
-        height: "100px",
-        border: '3px solid',
-        borderRadius: 25,
-        borderColor: "#AAAAAA",
-        backgroundColor: "#DDDDDD"
-    },
-    intro: {
-        height: "160px",
-        border: '3px solid',
-        borderRadius: 25,
-        borderColor: "#AAAAAA",
-        backgroundColor: "#DDDDDD"
-    },
     userIcon: {
-        width: theme.spacing(25),
-        height: theme.spacing(25),
+        minWidth: "200px",
+        minHeight: "200px"
+    },
+    paper: {
+        height: "90%",
+        padding: theme.spacing(4),
+    },
+    container: {
+        justifyContent: 'center',
+        marginTop: theme.spacing(4),
+
+    },
+    buttons: {
+        width: '100%',
+        textAlign: 'center',
+        bottom: 0
     },
 });
 
@@ -61,10 +50,12 @@ class Profile extends Component {
         this.state = {
             name: "",
             email: "",
-            imageURL: ""       
+            imageURL: "",
+            skills: "",
+            intro: ""
         };
     }
-    async componentDidMount(){
+    async componentDidMount() {
         await this.props.getAuthenticatedUserData();
         const { credentials } = this.props.user.userData;
         this.setState({
@@ -76,23 +67,30 @@ class Profile extends Component {
         })
     }
 
+    handleChange = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value,
+        });
+    };
+
+
     handleSubmit = (event) => {
         event.preventDefault();
-        const skills = document.getElementById('skills').value;
-        const intro = document.getElementById('intro').value;
+        const skills = this.state.skills;
+        const intro = this.state.intro;
         const userDetails = {
-          skills: skills,
-          intro: intro,
-          imageUrl: this.state.imageURL
+            skills: skills,
+            intro: intro,
+            imageUrl: this.state.imageURL
         }
         this.props.updateUserDetails(userDetails);
         window.location.reload();
-      }
+    }
 
     handleImageUpload = async (event) => {
         const image = event.target.files[0];
         const formData = new FormData();
-        formData.append('image', image, image.name); 
+        formData.append('image', image, image.name);
         await this.props.uploadUserImage(formData);
         this.setState({
             imageURL: this.props.user.userImageURL
@@ -104,58 +102,64 @@ class Profile extends Component {
         fileInput.click();
     }
 
-    render () {
+    render() {
         const { classes } = this.props;
-        return(
+        return (
             <div>
-                <NavBar/>
-                <form
-                    noValidate
-                    onSubmit={this.handleSubmit}
-                >
-                    <Box className={classes.root}>
-                        <Box className={classes.profile}>
-                            <Box pt={10} pb={1} p={15}>
-                                <Avatar src={this.state.imageURL} className={classes.userIcon}/>
-                            </Box>
-                            <input type="file" id="uploadImage" hidden="hidden" onChange={this.handleImageUpload}/>
-                            <CustomButton tip="Upload a Profile Image" onClick={this.handleUploadButton}>
-                                <EditIcon color="primary"/>
-                            </CustomButton>
-                            <Box pt={3} p={1}>
-                                <Typography variant="h5"> {this.state.name} </Typography>
-                            </Box>
-                            <Box p={1}>
-                                <Typography variant="h5"> {this.state.email} </Typography>
-                            </Box>
-                        </Box>
-                        <Box flexGrow={1} height='100%'>
-                            <Box mt={10} ml={5} mr={3} p={5} flexGrow={1} className={classes.roundBox}>
-                                <Box>
-                                    <Typography variant="h4"> Skills </Typography>
-                                </Box>
-                                <Box mt={2} p={2}  className={classes.who}>
-                                    <InputBase id="skills" defaultValue={this.state.skills} fullWidth multiline rowsMax='2' inputProps={{style: {fontSize: 30, lineHeight: 1.2}}}/>
-                                </Box>
-                                <Box pt={3}>
-                                    <Typography variant="h4"> Introduction </Typography>
-                                </Box>
-                                <Box mt={2} p={2} mb={4} className={classes.intro}>
-                                    <InputBase id="intro" defaultValue={this.state.intro} fullWidth multiline rowsMax='4' inputProps={{style: {fontSize: 30, lineHeight: 1.2}}}/>
-                                </Box>
-                            </Box>
-                            <Box pt={4} pr={6} display='flex' flexDirection='row' justifyContent='flex-end'>
-                                <Box pr={2}>
-                                    <Button onClick={() => (window.location.reload())}>Cancel</Button>
-                                </Box>
-                                <Box pr={2}>
-                                    <Button type="submit" variant="contained" color="primary">Save</Button>
-                                </Box>
-                            </Box>
-                        </Box>
-                    </Box>
+                <NavBar />
+                <form noValidate onSubmit={this.handleSubmit} className={classes.form}>
+                    <div className={classes.root}>
+                        <Grid container spacing={3} className={classes.container}>
+                            <Grid item xs={3}>
+                                <Paper className={classes.profile}>
+                                    <Avatar src={this.state.imageURL} className={classes.userIcon} />
+                                    <input type="file" id="uploadImage" hidden="hidden" onChange={this.handleImageUpload} />
+                                    <CustomButton tip="Upload a Profile Image" onClick={this.handleUploadButton}>
+                                        <EditIcon color="primary" />
+                                    </CustomButton>
+                                    <Typography variant="h5"> {this.state.name} </Typography>
+                                    <br />
+                                    <Typography variant="h6"> {this.state.email} </Typography>
+                                </Paper>
+                            </Grid>
+                            <Grid item xs={4}>
+                                <Paper className={classes.paper}>
+                                    <TextField
+                                        id="standard-multiline-static"
+                                        name="skills"
+                                        label="Skills"
+                                        fullWidth
+                                        multiline
+                                        rows={4}
+                                        variant="outlined"
+                                        value={this.state.skills || ''}
+                                        style={{ marginBottom: 40 }}
+                                        onChange={this.handleChange}
+                                    />
+                                    <TextField
+                                        id="standard-multiline-static"
+                                        label="Introduction"
+                                        name="into"
+                                        fullWidth
+                                        multiline
+                                        rows={6}
+                                        variant="outlined"
+                                        value={this.state.intro || ''}
+                                        onChange={this.handleChange}
+                                    />
+                                </Paper>
+                            </Grid>
+                        </Grid>
+                    </div>
+                    <br />
+                    <br />
+                    <br />
+                    <div className={classes.buttons}>
+                        <Button onClick={() => (window.location.reload())}>Cancel</Button>
+                        <Button type="submit" variant="contained" color="primary">Save</Button>
+                    </div>
                 </form>
-            </div>
+            </div >
         )
     }
 }

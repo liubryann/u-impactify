@@ -1,5 +1,5 @@
 import API from '../../api';
-import { USER_ERROR, USER_TYPE, SET_USER, UPDATE_USER, UPLOAD_USER_IMAGE } from '../types';
+import { USER_ERROR, USER_TYPE, SET_USER, UPDATE_USER, UPLOAD_USER_IMAGE, USER_COURSES } from '../types';
 
 
 export const userCourses = () => (async (dispatch) => {
