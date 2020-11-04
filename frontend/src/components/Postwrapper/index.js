@@ -12,82 +12,13 @@ const useStyles = makeStyles((theme) => ({
         overflow: 'hidden',
         backgroundColor: theme.palette.background.paper,
         height: "100%",
-        width: "70%",
         margin: 'auto',
     },
 }));
 
-//to test posts
-const posts = [
-    {
-        title: 'Post 1',
-        postType: 'OFFERING',
-        postContent: "ebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rt"
-    },
-    {
-        title: 'Post 2',
-        postType: 'ASKING',
-        postContent: "ebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rt"
-    },
-    {
-        title: 'Post 3',
-        postType: 'ASKING',
-        postContent: "ebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rt"
-    },
-    {
-        title: 'Post 1',
-        postType: 'OFFERING',
-        postContent: "ebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rt"
-    },
-    {
-        title: 'Post 2',
-        postType: 'ASKING',
-        postContent: "ebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rt"
-    },
-    {
-        title: 'Post 3',
-        postType: 'ASKING',
-        postContent: "ebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rt"
-    },
-    {
-        title: 'Post 1',
-        postType: 'OFFERING',
-        postContent: "ebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rt"
-    },
-    {
-        title: 'Post 2',
-        postType: 'ASKING',
-        postContent: "ebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rt"
-    },
-    {
-        title: 'Post 3',
-        postType: 'ASKING',
-        postContent: "ebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rt"
-    },
-    {
-        title: 'Post 1',
-        postType: 'OFFERING',
-        postContent: "ebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rt"
-    },
-    {
-        title: 'Post 2',
-        postType: 'ASKING',
-        postContent: "ebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rt"
-    },
-    {
-        title: 'Post 3',
-        postType: 'ASKING',
-        postContent: "ebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rtebfhjerbf begjrtg bghjrtbg ifbhjerg bgtjrhgrt gbtrwkngtjrkg bghjrtgj bfhejrbghjrt gbghjrtjqg trbhgjtrhjg rt"
-    }
-]
-
-// to test no posts
-// const posts = undefined
-
 export default function PostWrapper(props) {
     const classes = useStyles();
-
-    if(!posts){
+    if(!props.posts){
         return (
             <div className={classes.root}>
                 <Typography variant='h6' align="center" color="textSecondary">
@@ -100,11 +31,11 @@ export default function PostWrapper(props) {
     return (
         <div className={classes.root}>
             <Grid container>
-                    { posts.filter((post) => 
-                        props.postType ? post.postType === props.postType : post
-                    ).filter((post) => post.title.includes(props.searchTitle))
-                    .slice(0,props.postLimit)
-                    .map((course) => <Post title={course.title} postType={course.postType} postContent={course.postContent}/>) }
+                { props.posts.filter((post) => 
+                    props.postType ? post.type === props.postType : post
+                ).filter((post) => post.title.toLowerCase().includes(props.searchTitle.toLowerCase()))
+                .slice(0,props.postLimit)
+                .map((post, index) => <Post key={index} title={post.title} postType={post.type} postContent={post.content}/>) }
             </Grid>
         </div>
     )

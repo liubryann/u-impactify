@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -13,13 +12,15 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
-
+import { connect } from 'react-redux';
 import NavBar from "../../components/Navbar";
 import BottomBar from "../../components/Bottombar";
 import PostWrapper from "../../components/Postwrapper";
 import ScrollButton from "../../components/ScrollButton";
 import { withStyles } from '@material-ui/core';
 import { postTypes } from '../../constants';
+
+import { getAllPosts } from '../../redux/actions/postActions';
 
 const styles = (theme) => ({
   searchField: {
@@ -53,12 +54,16 @@ class GivingGarden extends Component {
     };
   };
 
+  componentDidMount() {
+    this.props.getAllPosts();
+  }
+
   CheckBoxWrapper(label, value, name) {
     return (
       <FormControlLabel
         control={
           <Checkbox
-            checked={this.state[name] == value}
+            checked={this.state[name] === value}
             onChange={this.handleChange}
             name={name}
             value={value}
@@ -87,16 +92,17 @@ class GivingGarden extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    const newPostData = {
-      title: this.state.title,
-      postType: this.state.postType,
-      postContent: this.state.postContent
-    };
+    // const newPostData = {
+    //   title: this.state.title,
+    //   postType: this.state.postType,
+    //   postContent: this.state.postContent
+    // };
     //this.props. /* REDUX ACTION GOES HERE */
   };
 
   render() {
     const { classes } = this.props;
+    const { posts } = this.props.posts;
     return (
       <div >
         <NavBar />
@@ -123,19 +129,19 @@ class GivingGarden extends Component {
                 type="number"
                 size="small"
                 variant="outlined"
-                InputProps={{ inputProps: { min: 0 } }}
+                InputProps={{ inputProps: { min: 1 } }}
                 name="postLimit"
                 onChange={this.handleInput}
               />
             </Grid>
-            <Grid item xs={1.5}>
+            <Grid item xs={1}>
               {this.CheckBoxWrapper(
                 postTypes.OFFERING_STR.charAt(0) + postTypes.OFFERING_STR.slice(1).toLowerCase(),
                 postTypes.OFFERING_STR,
                 "displayPostType"
               )}
             </Grid>
-            <Grid item xs={1.5}>
+            <Grid item xs={1}>
               {this.CheckBoxWrapper(
                 postTypes.ASKING_STR.charAt(0) + postTypes.ASKING_STR.slice(1).toLowerCase(),
                 postTypes.ASKING_STR,
@@ -212,7 +218,7 @@ class GivingGarden extends Component {
           </Grid>
 
           <Grid item xs={12} >
-            <PostWrapper postType={this.state.displayPostType} postLimit={this.state.postLimit ? this.state.postLimit : undefined} searchTitle={this.state.searchTitle} />
+            <PostWrapper posts={posts} postType={this.state.displayPostType} postLimit={this.state.postLimit ? this.state.postLimit : undefined} searchTitle={this.state.searchTitle} />
           </Grid>
         </Grid >
         <div className={classes.root}>
@@ -224,4 +230,15 @@ class GivingGarden extends Component {
   }
 }
 
-export default (withStyles(styles))(GivingGarden);
+
+const mapDispatchToProps = {
+  getAllPosts: getAllPosts
+};
+
+const mapStateToProps = (state) => ({
+  posts: state.posts
+});
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(GivingGarden));

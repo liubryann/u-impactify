@@ -72,7 +72,7 @@ export default function Post(props) {
 
     return (
         <Grid item xs={12}>
-            <Card className={classes.root, classes.card} style={{ backgroundColor: ' #9badbd', color: 'white' }}>
+            <Card className={[classes.root, classes.card].join(" ")} style={{ backgroundColor: ' #9badbd', color: 'white' }}>
                 <Grid container>
                     <Grid item xs={9}>
                         <CardHeader
@@ -87,19 +87,17 @@ export default function Post(props) {
                         </Typography>
                         <CardActions disableSpacing className={classes.icon}>
 
-                            <IconButton
+                            <Button
                                 className={clsx(classes.expand)}
                                 onClick={handleExpandClick}
                                 aria-expanded={expanded}
                             >
-                                <Button fullWidth={true}>
-                                    {read}
-                                </Button>
-                            </IconButton>
+                                {read}
+                            </Button>
                         </CardActions>
                     </Grid>
                     <Grid item className={classes.gridItem}>
-                        <Divider className={[classes.verticalDivider, classes.toCenterComponent].join(" ")} dark orientation="vertical" />
+                        <Divider className={[classes.verticalDivider, classes.toCenterComponent].join(" ")} dark='true' orientation="vertical" />
                     </Grid>
                     <Grid item className={classes.gridItem} xs={3}>
                         <Button className={classes.toCenterComponent} size="large" >Interested</Button>

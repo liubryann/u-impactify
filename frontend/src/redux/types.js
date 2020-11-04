@@ -24,3 +24,6 @@ export const USER_TYPE = 'USER_TYPE';
 export const SET_USER = 'SET_USER';
 export const UPDATE_USER = 'UPDATE_USER'
 export const UPLOAD_USER_IMAGE = 'UPLOAD_USER_IMAGE';
+//Posts Types
+export const SET_POSTS = 'SET_POSTS';
+export const POST_ERROR = 'POST_ERROR';
