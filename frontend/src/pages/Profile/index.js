@@ -139,7 +139,7 @@ class Profile extends Component {
                                     <TextField
                                         id="standard-multiline-static"
                                         label="Introduction"
-                                        name="into"
+                                        name="intro"
                                         fullWidth
                                         multiline
                                         rows={6}
