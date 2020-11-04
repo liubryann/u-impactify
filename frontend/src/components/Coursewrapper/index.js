@@ -97,6 +97,8 @@ function CourseWrapper(props) {
     // props.userCourseIds(email, props.userType)
     // const userCourseIds = useSelector(state => state.user.userCourseIds, shallowEqual);
     const courses = props.courses;
+    const enrolled = props.enrolled; // true will show "enroll" on the button, "false" will show "unenroll"
+    const isStudent = props.isStudent;
     if(!courses){
         return (
             <div className={classes.root}>
@@ -110,7 +112,7 @@ function CourseWrapper(props) {
     return (
         <div className={classes.root}>
             <GridList cellHeight={160} className={classes.gridList}>
-            {courses.map((course, index) => <CourseCard key={index} course={course}/>)}
+            {courses.map((course, index) => <CourseCard key={index} course={course} enrolled={enrolled} isStudent={isStudent} />)}
                 {/* {userCourseIds.map((userCourseId) => (
                     <CourseCard courseId={userCourseId}/>
                 ))} */}

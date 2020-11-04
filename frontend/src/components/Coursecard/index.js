@@ -13,6 +13,9 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import Collapse from '@material-ui/core/Collapse';
 import Divider from "@material-ui/core/Divider";
 import Avatar from "@material-ui/core/Avatar";
+import { Container } from '@material-ui/core';
+import { Button } from '@material-ui/core';
+
 
 // import { connect, useSelector, shallowEqual } from 'react-redux';
 
@@ -27,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
     },
     card: {
         maxWidth: 300,
+        height: '100%',
         backgroundColor: theme.palette.primary,
         margin: 'auto',
         marginBottom: '7.5px',
@@ -67,6 +71,8 @@ function CourseCard(props) {
         setExpanded(!expanded);
     };
     
+    const enrolled = props.enrolled; // true will show "enroll" on the button, "false" will show "unenroll"
+    const isStudent = props.isStudent;
 
     return (
         <Card className={classes.root, classes.card} style={{ backgroundColor: ' #9badbd', color: 'white' }}>
@@ -109,8 +115,16 @@ function CourseCard(props) {
                     </Typography>
                 </CardContent>
             </Collapse>
+            <Container align='center'>
+                <Typography variant='caption' align="center">
+                {props.isStudent && (<Button> {(!props.enrolled) ? "Enroll" : "Unenroll"} </Button>)}
+                </Typography>
+            </Container>
         </Card>
     );
+    
+    
+    
 }
 
 // const mapStateToProps = (state) => ({});
