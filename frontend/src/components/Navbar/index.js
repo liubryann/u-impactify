@@ -81,7 +81,7 @@ class NavBar extends Component {
               <Typography>Sign out</Typography>
             </Button>
             <Button onClick={() => (window.location.href = '/profile')}>
-              <Avatar src={this.state.imageURL ? this.state.imageURL : defaultCourseImg} className={classes.large}/>
+              <Avatar src={this.state.imageURL} className={classes.large}/>
             </Button>
           </Toolbar>
         </AppBar>
