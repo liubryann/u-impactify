@@ -13,6 +13,7 @@ import CourseCreation from './pages/CourseCreation';
 import GivingGarden from './pages/GivingGarden';
 //Redux
 import { isLoggedIn } from './redux/actions/authActions'
+import Footer from './components/Footer';
 
 const theme = createMuiTheme({
   palette: {
@@ -45,6 +46,7 @@ function App() {
                     <Route exact path="/giving-garden" render={() => isLoggedIn() ? <GivingGarden/> : <Redirect to='/login'/>}/>
                 </Switch>
             </Router>
+            <Footer/>
         </ThemeProvider>
     );
 }

@@ -14,7 +14,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
 import NavBar from "../../components/NavBar";
-import BottomBar from "../../components/Bottombar";
 import PostWrapper from "../../components/Postwrapper";
 import ScrollButton from "../../components/ScrollButton";
 import { withStyles } from '@material-ui/core';
@@ -224,7 +223,6 @@ class GivingGarden extends Component {
         <div className={classes.root}>
           <ScrollButton />
         </div>
-        <BottomBar />
       </div >
     )
   }

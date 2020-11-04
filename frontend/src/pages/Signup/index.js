@@ -17,7 +17,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { FormHelperText } from "@material-ui/core";
-import Bottombar from '../../components/Bottombar'; 
 import Topbar from '../../components/topbar'; 
 
 // redux
@@ -273,7 +272,6 @@ class Signup extends Component {
           </div>
         </Grid>
       </Grid>
-      <Bottombar/>
       </div>
     );
   }

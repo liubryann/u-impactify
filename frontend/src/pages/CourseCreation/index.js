@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import NavBar from '../../components/NavBar';
-import Bottombar from '../../components/Bottombar';
 import PropTypes from "prop-types";
 import withStyles from "@material-ui/core/styles/withStyles";
 import TextField from '@material-ui/core/TextField';
@@ -273,7 +272,6 @@ export class CourseCreation extends Component {
                   Publish course
                 </Button>
               </div>
-              <Bottombar />
             </div>
         )
     }

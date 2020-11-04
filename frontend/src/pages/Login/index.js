@@ -1,7 +1,6 @@
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import Bottombar from '../../components/Bottombar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
@@ -168,7 +167,6 @@ const { loading, authErrors } = props.auth;
         </div>
       </Grid>
     </Grid>
-      <Bottombar/>
     </div>
   );
 }

@@ -12,7 +12,6 @@ import { userTypeDetails } from '../../redux/actions/userActions';
 import { userCourses } from '../../redux/actions/userActions';
 
 import NavBar from "../../components/NavBar"
-import Bottombar from "../../components/Bottombar"
 import CourseWrapper from '../../components/Coursewrapper';
 import CustomButton from '../../components/CustomButton'; 
 import { userTypes } from '../../constants';
@@ -71,7 +70,6 @@ class Dashboard extends Component {
               <Paper className={classes.paper}>{/* Courses go here */}</Paper>
             </Grid>
           </Grid>
-          <Bottombar />
         </div>
       )
     } else if (userType === userTypes.IMPACT_CONSULTANT) {
@@ -100,7 +98,6 @@ class Dashboard extends Component {
               <Paper className={classes.paper}>{/* Posts go here */}</Paper>
             </Grid>
           </Grid>
-          <Bottombar />
         </div>
       )
     } else {
@@ -115,7 +112,6 @@ class Dashboard extends Component {
               </Paper>
             </Grid>
           </Grid>
-          <Bottombar position="sticky" />
         </div>
       )
     }
