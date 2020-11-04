@@ -64,7 +64,7 @@ class NavBar extends Component {
             <Typography variant="h4" className={classes.title}>
               U-Impactify
             </Typography>
-            <Button className={classes.button}>
+            <Button className={classes.button} onClick={() => (window.location.href='/home')}>
               <Typography>Dashboard</Typography>
             </Button>
             <Button className={classes.button} onClick={() => (window.location.href = '/giving-garden')}>

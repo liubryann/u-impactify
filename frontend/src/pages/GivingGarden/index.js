@@ -13,7 +13,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
-import NavBar from "../../components/Navbar";
+import NavBar from "../../components/NavBar";
 import BottomBar from "../../components/Bottombar";
 import PostWrapper from "../../components/Postwrapper";
 import ScrollButton from "../../components/ScrollButton";

@@ -1,6 +1,6 @@
 import { withStyles, Paper } from '@material-ui/core';
 import React, { Component } from 'react'
-import NavBar from '../../components/Navbar';
+import NavBar from '../../components/NavBar';
 import Grid from '@material-ui/core/Grid';
 import Bottombar from "../../components/Bottombar"
 import CourseWrapper from '../../components/Coursewrapper';

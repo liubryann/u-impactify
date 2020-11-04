@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid'
 import InputBase from '@material-ui/core/InputBase'
 import Paper from '@material-ui/core/Paper'
 import withStyles from "@material-ui/core/styles/withStyles"
-import NavBar from '../../components/Navbar'
+import NavBar from '../../components/NavBar'
 import { Button, TextField, Typography } from '@material-ui/core'
 
 import { connect } from 'react-redux';

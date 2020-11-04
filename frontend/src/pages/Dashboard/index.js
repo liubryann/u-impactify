@@ -11,7 +11,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { userTypeDetails } from '../../redux/actions/userActions';
 import { userCourses } from '../../redux/actions/userActions';
 
-import NavBar from "../../components/Navbar"
+import NavBar from "../../components/NavBar"
 import Bottombar from "../../components/Bottombar"
 import CourseWrapper from '../../components/Coursewrapper';
 import CustomButton from '../../components/CustomButton'; 
