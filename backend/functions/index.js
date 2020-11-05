@@ -1,8 +1,9 @@
 const functions = require('firebase-functions');
 
-const app = require('express')();
+const express = require('express');
+app = express(); 
 
-const { getCourse, makeCourse, getAllCourses, uploadImage } = require('./handlers/courses');
+const { getCourse, makeCourse, getAllCourses, uploadImage, generateSignedURL  } = require('./handlers/courses');
 const { getPost, getAllPosts } = require('./handlers/posts');
 const { signup, login, userCourses, userType, getAuthenticatedUser, getUserDetails, updateUserDetails } = require('./handlers/users');
 const fbAuth = require('./util/fbAuth');
@@ -29,5 +30,6 @@ app.get('/getPost', fbAuth, getPost);
 app.get('/getAllPosts', fbAuth, getAllPosts)
 app.get('/getUserDetails', getUserDetails);
 app.put('/updateUserDetails', fbAuth, updateUserDetails);
+app.get('/generateSignedURL', fbAuth, generateSignedURL);
 
 exports.api = functions.https.onRequest(app);

@@ -1,4 +1,4 @@
-import { GETCOURSE, COURSE_ERROR, SET_COURSES, COURSE_CREATION_SUCCESS, COURSE_CREATION_START, COURSE_CREATION_ERROR, IMAGE_UPLOAD_ERROR, IMAGE_UPLOAD_SUCCESS } from '../types';
+import { GETCOURSE, COURSE_ERROR, SET_COURSES, COURSE_CREATION_SUCCESS, COURSE_CREATION_START, COURSE_CREATION_ERROR, VIDEO_UPLOAD_START, VIDEO_UPLOAD_SUCCESS, IMAGE_UPLOAD_SUCCESS } from '../types';
 
 const initialState = {
   title: '',
@@ -13,7 +13,8 @@ const initialState = {
   content: [],
   error: null,
   courses: [],
-  loading: false
+  loading: false,
+  videoURL: ""
 }
 
 export default function (state = initialState, action) {
@@ -56,9 +57,18 @@ export default function (state = initialState, action) {
         loading: false,
         error: {}
       };
-    case IMAGE_UPLOAD_ERROR:
-      state.error = action.payload.msg;
-      return state;
+    case VIDEO_UPLOAD_START:
+      return {
+        ...state,
+        loading: true,
+      };
+    case VIDEO_UPLOAD_SUCCESS:
+      return {
+        ...state, 
+        videoURL: action.payload,
+        loading: false,
+        error: {}
+      };
     default:
       return state;
   }

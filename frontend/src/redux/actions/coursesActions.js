@@ -1,5 +1,6 @@
-import { GETCOURSE, COURSE_ERROR, SET_COURSES, COURSE_CREATION_SUCCESS, IMAGE_UPLOAD_START, COURSE_CREATION_ERROR, IMAGE_UPLOAD_SUCCESS, IMAGE_UPLOAD_ERROR, COURSE_CREATION_START} from '../types';
+import { GETCOURSE, COURSE_ERROR, SET_COURSES, COURSE_CREATION_SUCCESS, COURSE_CREATION_ERROR, IMAGE_UPLOAD_SUCCESS, VIDEO_UPLOAD_START, VIDEO_UPLOAD_SUCCESS, COURSE_CREATION_START} from '../types';
 import API from '../../api';
+import axios from 'axios';
 
 export const getCourse = (courseId) => (async dispatch => {
   await API.post('/getCourse', { courseId })
@@ -58,16 +59,40 @@ export const uploadImage = (formData) => (async dispatch => {
       });
     })
     .catch((err) => {
-      console.log(err);
-      let msg = '';
-      if (err.response) {
-        msg = err.response.data.error;
-      }
       dispatch({
-        type: IMAGE_UPLOAD_ERROR,
-        payload: msg
+        type: COURSE_CREATION_ERROR,
+        payload: err.response.data
       })
     });
+});
+
+export const uploadVideo = (formData) => (async dispatch => {
+  dispatch({ type: VIDEO_UPLOAD_START }); 
+  await API.get('/generateSignedURL', { params: { vidName: formData.get("video").name }, headers: { 'Authorization': `Bearer ${localStorage.getItem('idToken')}` }})
+    .then(async res => {
+      // this add on thing is only neccessary for development I think
+      const url = 'https://cors-anywhere.herokuapp.com/' + res.data.url; 
+      await API.put(url, formData.get("video"), { headers : { 'Content-Type': formData.get("Content-Type") }})
+        .then(() => {
+          dispatch({
+            type: VIDEO_UPLOAD_SUCCESS,
+            payload: res.data.accessURL
+          })
+        })
+        .catch(err => {
+          const videoErr = { videoUpload: err.response.data };
+          dispatch({
+            type: COURSE_CREATION_ERROR,
+            payload: videoErr
+          })
+        })
+    })
+    .catch(err => {
+      dispatch({
+        type: COURSE_CREATION_ERROR,
+        payload: err.response.data
+      })
+    })
 });
 
 export const submitCourse = (newCourseData, history) => (async dispatch => {
@@ -91,3 +116,4 @@ export const submitCourse = (newCourseData, history) => (async dispatch => {
       })
     })
 })
+

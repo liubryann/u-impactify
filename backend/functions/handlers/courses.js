@@ -7,6 +7,7 @@ const path = require("path");
 const os = require("os");
 const fs = require("fs");
 const { uuid } = require("uuidv4");
+const { generateV4UploadSignedUrl, generateV4DownloadSignedUrl } = require('../util/gcp');
 
 exports.getCourse = (req, res) => {
   const { courseId } = req.body;
@@ -22,7 +23,6 @@ exports.getCourse = (req, res) => {
       console.log(err);
       return res.status(500).json({ error: err.code });
     });
-
 };
 
 exports.makeCourse = (req, res) => {
@@ -34,6 +34,8 @@ exports.makeCourse = (req, res) => {
     instructorImageURL: req.body.instructorImageURL,
     instructorEmail: req.body.instructorEmail,
     createdAt: new Date().toISOString(),
+    content: req.body.content,
+    sections: req.body.sections
   }
   const { valid, errors } = validateCourseCreation(newCourse);
   if (!valid) return res.status(400).json(errors);
@@ -42,6 +44,11 @@ exports.makeCourse = (req, res) => {
     .then((doc) => {
       const resCourse = newCourse;
       resCourse.courseId = doc.id;
+      
+      db.collection('users')
+        .doc(req.body.instructorEmail)
+        .collection('courses')
+        .doc(doc.id).set({});
       return res.status(201).json(resCourse);
     })
     .catch(err => {
@@ -100,7 +107,7 @@ exports.uploadImage = (req, res) => {
   });
   busboy.on("finish", () => {
     storage
-      .bucket()
+      .bucket(config.bucket)
       .upload(imageToBeUploaded.filepath, {
         resumable: false,
         metadata: {
@@ -125,4 +132,16 @@ exports.uploadImage = (req, res) => {
       });
   });
   busboy.end(req.rawBody);
+}
+
+
+exports.generateSignedURL = (req, res) => {
+  generateV4UploadSignedUrl(req.query.vidName)
+    .then(urls => {
+      return res.status(200).json(urls);
+    })
+    .catch(err => {
+      console.err(err); 
+      return res.status(500).json({ error: "Something went wrong with the video upload" });
+    })
 }

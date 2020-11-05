@@ -16,9 +16,13 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Input from '@material-ui/core/Input';
 import PublishIcon from '@material-ui/icons/Publish';
+import CircularProgress from "@material-ui/core/CircularProgress";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
 
 import { getAuthenticatedUserData } from '../../redux/actions/userActions';
-import { uploadImage, submitCourse } from '../../redux/actions/coursesActions';
+import { uploadImage, uploadVideo, submitCourse } from '../../redux/actions/coursesActions';
 import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
 import { defaultCourseImg } from '../../constants.js';
@@ -34,6 +38,7 @@ const styles = (theme) => ({
     color: theme.palette.text.primary
   },
   paper: {
+    position: 'relative',
     padding: theme.spacing(2),
     height: "90%"
   },
@@ -56,6 +61,21 @@ const styles = (theme) => ({
     marginLeft: theme.spacing(3),
     width: '90%',
   },
+  upload: {
+    width: '85px',
+  },
+  progress: {
+    position: 'absolute',
+  },
+  fade: {
+    opacity: "20%"
+  },
+  save: {
+    textAlign: 'center',
+    position: 'absolute', 
+    bottom: 20,
+    width: '100%', 
+  },
   submitButton: {
     textAlign: 'center'
   }
@@ -76,7 +96,9 @@ export class CourseCreation extends Component {
             selected: "",
             newSection: "",
             sectionCount: 1,
-            desc: "",        
+            desc: "",
+            vidName: "",    
+            save: false
         };
     }
 
@@ -103,18 +125,28 @@ export class CourseCreation extends Component {
       };
 
     handleSelect = (event, nodeId) => {
-      this.setState({ selected: nodeId })
+      const [section, subsection] = nodeId.split(";");
+      const index = this.state[section].indexOf(subsection);
+      const desc = this.state[`${section}Desc`][index]; 
+      const vidName = this.state[`${section}VidName`][index];
+      this.setState({ 
+        selected: nodeId,
+        desc: desc,
+        vidName: vidName
+       })
     }
 
     handleNewSectionEnter = (event) => {
-      if (event.key === 'Enter') {
+      if (event.key === 'Enter' && this.state.newSection.trim() !== "") {
         const newSection = `Section ${this.state.sectionCount++}: ${this.state.newSection}`;
         const URLs = `${newSection}URLs`;
         const desc = `${newSection}Desc`;
+        const vidName = `${newSection}VidName`; 
         this.setState(prevState => ({
           sections: [...prevState.sections, newSection],
           [newSection]: [],
           [URLs]: [],
+          [vidName]: [],
           [desc]: [],
           newSection: ""
         }))
@@ -122,26 +154,106 @@ export class CourseCreation extends Component {
     }
 
     handleNewSubsectionEnter = (event) => {
-      if (event.key === 'Enter') {
-        const id = event.target.id;
-        const name = event.target.name;
+      const name = event.target.name;
+      const id = event.target.id;
+      if (event.key === 'Enter'  && this.state[name]) {
         this.setState(prevState => ({
           [id]: [...prevState[id], this.state[name]],
-          [name]: ""
+          [name]: "",
+          [`${id}Desc`]: [...prevState[`${id}Desc`], ""],
+          [`${id}URLs`]: [...prevState[`${id}URLs`], ""],
+          [`${id}VidName`]: [...prevState[`${id}VidName`], ""]
         }))
+      }
+    }
+
+    handleVideoUpload = async (event) => {
+      const selected = this.state.selected; 
+      if (!selected.includes(";") || selected === "") {
+        this.setState({
+          error: {
+            content: "Select a subsection"
+          }
+        })
+      }
+      else {
+        const [section, subsection] = selected.split(";"); 
+        const index = this.state[section].indexOf(subsection);
+        const video = event.target.files[0];
+        const formData = new FormData();
+        formData.append('video', video, video.name); 
+        formData.append('Content-Type', video.type);
+        await this.props.uploadVideo(formData); 
+        const vidNames = this.state[`${section}VidName`];
+        vidNames[index] = video.name;
+        const vidURLs = this.state[`${section}URLs`];
+        vidURLs[index] = this.props.courses.videoURL; 
+        this.setState({
+          [`${section}URLs`]: vidURLs,
+          [`${section}VidName`]: vidNames,
+          vidName: video.name
+        })
+      }
+    }
+
+    handleUploadVideoButton = () => {
+      const fileInput = document.getElementById('uploadVideo');
+      fileInput.click();
+    }
+
+    handleSave = () => {
+      const selected = this.state.selected; 
+      if (!selected.includes(";") || selected === "") {
+        this.setState({
+          error: {
+            content: "Select a subsection"
+          }
+        })
+      }
+      else {
+        const [section, subsection] = selected.split(";"); 
+        const index = this.state[section].indexOf(subsection);
+        const desc = this.state[`${section}Desc`]; 
+        desc[index] = this.state.desc; 
+        this.setState({
+          error: {},
+          [`${section}Desc`]: desc,
+          save: true
+        })
       }
     }
 
     handleSubmit = (event) => {
       event.preventDefault();
-      const newCourse = {
+      let newCourse = {
         title: this.state.title,
         summary: this.state.summary,
         courseImageURL: this.state.courseImageURL,
         instructor: this.state.instructor,
         instructorImageURL: this.state.instructorImageURL,
-        instructorEmail: this.state.instructorEmail
+        instructorEmail: this.state.instructorEmail,
+        sections: this.state.sections
       }
+
+      let content = { }; 
+      for(const section of this.state.sections) {
+        const sectionContent = { }; 
+        sectionContent.subsections = this.state[section];
+        sectionContent.descriptions = this.state[`${section}Desc`];
+        sectionContent.URLs = this.state[`${section}URLs`]; 
+
+        content = {
+          ...content,
+          [section]: sectionContent
+        }
+      }
+
+      newCourse = {
+        ...newCourse,
+        'content': content 
+      }
+
+
       this.props.submitCourse(newCourse,this.props.history);
     }
 
@@ -161,7 +273,6 @@ export class CourseCreation extends Component {
     }
 
     render() {
-        const { userData } = this.props.user;
         const { classes } = this.props;
         const { loading } = this.props.courses; 
         const { error } = this.state;
@@ -170,7 +281,7 @@ export class CourseCreation extends Component {
           this.state.sections.map((section) => 
               <TreeItem nodeId={section} label={section}>
                 {this.state[section].map((subsection) => 
-                <TreeItem nodeId={subsection} label={subsection}/> )}
+                <TreeItem nodeId={`${section};${subsection}`} label={subsection}/> )}
                 <Input 
                   id={section} 
                   name={`${section}Value`} 
@@ -196,7 +307,7 @@ export class CourseCreation extends Component {
                   <Typography variant="h6">Card</Typography>
               
                   <br/>
-                  <form onSubmit={this.handleSubmit}>
+                  <form  id="form" onSubmit={this.handleSubmit}>
                       <TextField className={classes.title} id="title" name="title" label="Title" value={this.state.title} onChange={this.handleChange} helperText={error.title} error={error.title}/>
                       <br/>
                       <TextField className={classes.summary} id="summary" name="summary" label="Course summary" multiline rows={4} value={this.state.summary} onChange={this.handleChange} helperText={error.summary} error={error.summary}/>
@@ -234,6 +345,7 @@ export class CourseCreation extends Component {
                     defaultCollapseIcon={<ExpandMoreIcon />}
                     defaultExpandIcon={<ChevronRightIcon />}
                     onNodeSelect={this.handleSelect}
+                    disableSelection={loading}
                   >
                     {outline}
                     <Input 
@@ -254,24 +366,49 @@ export class CourseCreation extends Component {
                 <Grid item xs={4}>
                 <Paper className={classes.paper}>
                   <Typography className={classes.header} variant="h6">Content</Typography>
-                  <TextField className={classes.summary} id="desc" name="desc" label="Describe section" multiline rows={4} value={this.state.desc} onChange={this.handleChange}/>
+                  <TextField className={classes.summary} id="desc" name="desc" label="Describe subsection" multiline rows={4} value={this.state.desc || ''} onChange={this.handleChange} helperText={error.content} error={error.content}/>
                   <br/>
-                  <Button variant="outlined">
-                    Upload
-                    <PublishIcon/>
+                  <input
+                        type="file"
+                        id="uploadVideo"
+                        hidden="hidden"
+                        onChange={this.handleVideoUpload}
+                        />
+                  <Button className={classes.upload} variant="outlined" onClick={this.handleUploadVideoButton}>
+                    <PublishIcon className={loading ? classes.fade : ""}/>
+                    {loading && (
+                     <CircularProgress color="secondary" size={25} className={classes.progress} />
+                    )}
                   </Button>
                   <br/>
+                  {error.videoUpload && (
+                    <FormHelperText error={error.videoUpload ? true : false}>
+                      Videos need to be mp4
+                    </FormHelperText>
+                  )}
+                  <Typography variant="caption">{this.state.vidName ? this.state.vidName : 'Upload a video'}</Typography>
                   <br/>
-                  <Typography variant="caption">Upload a video for each subsection</Typography>
+                  <div className={classes.save}>
+                    <Button variant="outlined" onClick={this.handleSave}>
+                      Save
+                    </Button>
+                    <br/>
+                    <Typography variant="caption">Save content for each subsection</Typography>
+                  </div>
                 </Paper>
                 </Grid>
               </Grid>
               </div>
               <div className={classes.submitButton}>
-                <Button type="submit" variant="contained" color="primary" disabled={loading}>
+                <Button form="form" type="submit" variant="contained" color="primary" disabled={loading}>
                   Publish course
                 </Button>
               </div>
+              <Snackbar open={this.state.save} autoHideDuration={3000} onClose={() => this.setState({ save: false })}>
+                <MuiAlert severity="success">
+                  Subsection saved!
+                </MuiAlert>
+              </Snackbar>
             </div>
         )
     }
@@ -290,6 +427,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   getAuthenticatedUserData: getAuthenticatedUserData,
   uploadImage: uploadImage,
+  uploadVideo: uploadVideo, 
   submitCourse: submitCourse
 }
 
