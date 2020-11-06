@@ -2,7 +2,7 @@ The numerical series that our team used to assign story points is the Fibbonacci
 | User Story | Priority | Estimate |
 | ---------- | -------- | -------- |
 |As John Buck,  a student I want to be able to log into the system so that I can access the website| Highest | 5
-|As John Buck, a student, I want to be able to sign up for the application as an impact learner| Highest | 5
+|As John Buck - a student, Tien Levi - an instructor, and Mary Janet - representing her organization, I want to be able to sign up for the application as a user| Highest | 5
 |As John Buck, a student, I want to view a dashboard with all my courses so that I can see everything I am subscribed to in one place| High | 8
 |As John Buck, a student, I want to enroll to courses so that I can use the material that is uploaded to advance my knowledge in that field| Medium | 3
 |As John Buck, a student, I want to view the material outline in a course so that I can see the content breakdown of the course| Medium | 3
@@ -10,11 +10,9 @@ The numerical series that our team used to assign story points is the Fibbonacci
 |As John Buck, a student, I want to view each course material (video/pdf) so that I can learn the content| Highest | 13
 |As John Buck, a student, I want to post on the Giving Garden asking for support so that I can afford to take a subsidized course| High | 5
 |As John Buck, a student, I want to post on the Giving Garden offering my services so that I can utilize the skills obtained from the courses I took| High | 5
-|As Tien Levi, an instructor, I want to be able to sign up for the application as an impact consultant| Highest | 5
 |As Tien Levi, an instructor, I want to create a course with a title and summary so that students can view it and subscribe to it|Highest | 13
 |As Tien Levi, an instructor, I want to upload videos and documents so that students subscribed to my course can learn the content| Highest | 8
 |As Tien Levi, an instructor, I want to post on the Giving Garden offering my services so that I can utilize my consultation skills| High | 5
-|As Mary Janet, representing her organization, I want to be able to sign up for the application as a social initiative| Highest | 5 |
 |As Mary Janet, representing her organization, I want to post on the Giving Garden asking for assistance so that they can successfully accomplish their task towards a social initiative| High | 5
 |As John Buck - a student, Tien Levi - an instructor, and Mary Janet - representing her organization , I want to add profile information so that I can be identified on the platform| Medium | 8
 |As John Buck - a student, Tien Levi - an instructor, and Mary Janet - representing her organization , I want to be able to view another user's profile information so that I can learn more about them through the platform| Medium | 5
