@@ -221,4 +221,15 @@ exports.getAuthenticatedUser = (req, res) => {
         res.status(500).json({ error: err.code })
     });
  }
+
+ exports.enrollInCourse = (req, res) => {
+    const {courseId} = req.body;
+    db.collection(`users/${req.user.email}/courses`).doc(`${courseId}`).set({})
+        .then(() => {
+            return res.status(200).json();
+        })
+        .catch((err) => {
+            return res.status(400).json({error:err.code});
+        });
+ }
  
