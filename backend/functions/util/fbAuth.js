@@ -27,6 +27,7 @@ module.exports = (req, res, next) => {
      })
      .then((data) => {
        req.user.email = data.docs[0].data().email;
+       req.user.name = data.docs[0].data().first + " " + data.docs[0].data().last
        return next();
      })
      .catch((err) => {

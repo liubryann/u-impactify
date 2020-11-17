@@ -1,4 +1,4 @@
-const { userTypes } = require('./constants');
+const { userTypes, postTypes } = require('./constants');
 
 const isEmail = (email) => {
   const regEx = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -103,6 +103,24 @@ exports.validateUserDetails = (data) => {
 
   if (isEmpty(data.imageUrl)) {
     errors.imageUrl = 'Must not be empty';
+  }
+  return {
+    errors,
+    valid: Object.keys(errors).length === 0 ? true : false
+  }
+}
+
+exports.validatePostCreation = (data) => {
+  let errors = {};
+
+  if (isEmpty(data.title)) {
+    errors.title = 'Must not be empty';
+  }
+  if (isEmpty(data.content)) {
+    errors.content = 'Must not be empty';
+  }
+  if (data.type !== postTypes.OFFERING_STR && data.type !== postTypes.ASKING_STR) {
+    errors.type = 'Invalid type';
   }
   return {
     errors,

@@ -1,4 +1,5 @@
 const { admin, db } = require("../util/admin");
+const { validatePostCreation } = require("../util/validators");
 
 exports.getPost = (req, res) => {
     const { postId } = req.body;
@@ -38,3 +39,28 @@ exports.getAllPosts = (req, res) => {
         })
   
 }
+
+exports.makePost = (req, res) => {
+    const newPost = {
+      title: req.body.title,
+      content: req.body.content,
+      type: req.body.type,
+      authorName: req.user.name,
+      authorEmail: req.user.email
+    }
+    const { valid, errors } = validatePostCreation(newPost);
+    if (!valid) return res.status(400).json(errors);
+  
+    db.collection('posts').add(newPost)
+      .then((doc) => {
+        db.collection('users')
+          .doc(req.user.email)
+          .collection('posts')
+          .doc(doc.id).set({});
+        return res.status(201).json({});
+      })
+      .catch(err => {
+        console.error(err);
+        return res.status(500).json({ error: err.code });
+      })
+  };
