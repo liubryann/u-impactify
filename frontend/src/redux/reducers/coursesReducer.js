@@ -1,4 +1,18 @@
-import { GETCOURSE, COURSE_ERROR, SET_COURSES, COURSE_CREATION_SUCCESS, COURSE_CREATION_START, COURSE_CREATION_ERROR, VIDEO_UPLOAD_START, VIDEO_UPLOAD_SUCCESS, IMAGE_UPLOAD_SUCCESS } from '../types';
+import 
+{ 
+  GETCOURSE, 
+  COURSE_ERROR, 
+  SET_COURSES, 
+  COURSE_CREATION_SUCCESS, 
+  COURSE_CREATION_START, 
+  COURSE_CREATION_ERROR, 
+  VIDEO_UPLOAD_START, 
+  VIDEO_UPLOAD_SUCCESS, 
+  IMAGE_UPLOAD_SUCCESS,
+  ENROLL_SUCCESS,
+  ENROLL_ERROR,
+  RESET_ALERT
+ } from '../types';
 
 const initialState = {
   title: '',
@@ -14,7 +28,9 @@ const initialState = {
   error: null,
   courses: [],
   loading: false,
-  videoURL: ""
+  videoURL: "",
+  enroll: false, 
+  error: {},
 }
 
 export default function (state = initialState, action) {
@@ -69,6 +85,23 @@ export default function (state = initialState, action) {
         loading: false,
         error: {}
       };
+    case ENROLL_SUCCESS: 
+      return { 
+        ...state, 
+        error: {},
+        enroll: true
+      }
+    case ENROLL_ERROR:
+      return {
+        ...state, 
+        error: action.payload
+      }
+    case RESET_ALERT:
+      return {
+        ...state, 
+        error: {},
+        enroll: false
+      }
     default:
       return state;
   }

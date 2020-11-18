@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -15,13 +15,11 @@ import Divider from "@material-ui/core/Divider";
 import Avatar from "@material-ui/core/Avatar";
 import { Container } from '@material-ui/core';
 import { Button } from '@material-ui/core';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
-
-// import { connect, useSelector, shallowEqual } from 'react-redux';
-
-// import { getCourseName, getCourseInstructor, getCourseOverview } from '../../redux/selectors/coursesSelectors';
-// import { getCourse } from '../../redux/actions/coursesActions'
-// import store from '../../redux/store';
+import { connect } from 'react-redux';
+import { enrollInCourse, resetAlert } from '../../redux/actions/coursesActions';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -65,14 +63,21 @@ const useStyles = makeStyles((theme) => ({
 
 function CourseCard(props) {
     const classes = useStyles();
-    const [expanded, setExpanded] = React.useState(false);
+    const [expanded, setExpanded] = useState(false);
     
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
-    
-    const enrolled = props.enrolled; // true will show "enroll" on the button, "false" will show "unenroll"
-    const isStudent = props.isStudent;
+
+    const onClick = () => {
+        if (!props.enrolled) {
+            props.enrollInCourse(props.course.courseId);
+        }
+    }
+
+    const onClose = async () => {
+        await props.resetAlert();
+    }
 
     return (
         <Card className={classes.root, classes.card} style={{ backgroundColor: ' #9badbd', color: 'white' }}>
@@ -117,21 +122,30 @@ function CourseCard(props) {
             </Collapse>
             <Container align='center'>
                 <Typography variant='caption' align="center">
-                {props.isStudent && (<Button> {(!props.enrolled) ? "Enroll" : "Unenroll"} </Button>)}
+                {props.isStudent && (<Button onClick={onClick}> {(!props.enrolled) ? "Enroll" : "Unenroll"} </Button>)}
                 </Typography>
             </Container>
+            <Snackbar open={ props.courses.enroll } autoHideDuration={3000} onClose={ onClose }>
+                <MuiAlert severity={ "success" }>
+                  { "Enrolled!" }
+                </MuiAlert>
+            </Snackbar>
+            <Snackbar open={ props.courses.error.error } autoHideDuration={3000} onClose={ onClose }>
+                <MuiAlert severity={ "error"}>
+                    { "Sorry there was an error!" }
+                </MuiAlert>
+            </Snackbar>
         </Card>
     );
-    
-    
-    
 }
 
-// const mapStateToProps = (state) => ({});
+const mapStateToProps = (state) => ({
+    courses: state.courses
+});
 
-// const mapDispatchToProps = {
-//     getCourse: getCourse
-// };
+const mapDispatchToProps = {
+    enrollInCourse: enrollInCourse,
+    resetAlert: resetAlert
+};
 
-// export default connect(mapStateToProps, mapDispatchToProps)(CourseCard);
-export default CourseCard;
+export default connect(mapStateToProps, mapDispatchToProps)(CourseCard);

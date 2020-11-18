@@ -1,4 +1,17 @@
-import { GETCOURSE, COURSE_ERROR, SET_COURSES, COURSE_CREATION_SUCCESS, COURSE_CREATION_ERROR, IMAGE_UPLOAD_SUCCESS, VIDEO_UPLOAD_START, VIDEO_UPLOAD_SUCCESS, COURSE_CREATION_START} from '../types';
+import {
+  GETCOURSE,
+  COURSE_ERROR,
+  SET_COURSES,
+  COURSE_CREATION_SUCCESS, 
+  COURSE_CREATION_ERROR, 
+  IMAGE_UPLOAD_SUCCESS, 
+  VIDEO_UPLOAD_START, 
+  VIDEO_UPLOAD_SUCCESS, 
+  COURSE_CREATION_START,
+  ENROLL_SUCCESS, 
+  ENROLL_ERROR, 
+  RESET_ALERT
+} from '../types';
 import API from '../../api';
 import axios from 'axios';
 
@@ -115,5 +128,30 @@ export const submitCourse = (newCourseData, history) => (async dispatch => {
         payload: err.response.data  
       })
     })
+})
+
+export const enrollInCourse = (courseId) => (async dispatch => {
+  await API.post('/enrollInCourse', {courseId}, {
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem('idToken')}`
+    }
+  })
+  .then(() => {
+    dispatch({
+      type: ENROLL_SUCCESS
+    })
+  })
+  .catch(err => {
+    dispatch({
+      type: ENROLL_ERROR, 
+      payload: err.response.data
+    })
+  })
+})
+
+export const resetAlert = () => (dispatch => {
+  dispatch({
+    type: RESET_ALERT
+  })
 })
 
