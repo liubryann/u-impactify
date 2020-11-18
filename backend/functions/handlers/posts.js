@@ -25,6 +25,8 @@ exports.getAllPosts = (req, res) => {
             let posts = []; 
             data.forEach((doc) => {
                 posts.push({
+                    authorEmail: doc.data().authorEmail,
+                    authorName: doc.data().authorName,
                     postId: doc.id, 
                     type: doc.data().type, 
                     title: doc.data().title, 

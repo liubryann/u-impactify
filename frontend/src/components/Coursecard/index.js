@@ -15,6 +15,7 @@ import Divider from "@material-ui/core/Divider";
 import Avatar from "@material-ui/core/Avatar";
 import { Container } from '@material-ui/core';
 import { Button } from '@material-ui/core';
+import ProfilePopup from '../ProfilePopup';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 
@@ -91,7 +92,7 @@ function CourseCard(props) {
             <CardHeader
                 className={classes.header}
                 avatar={
-                    <Avatar src={props.course.instructorImageURL} />
+                    <ProfilePopup pic={props.course.instructorImageURL} authorEmail={props.course.instructorEmail}/>
                 }
                 title={props.course.title}
                 subheader={props.course.instructor}

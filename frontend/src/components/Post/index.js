@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Divider from "@material-ui/core/Divider";
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import ProfilePopup from '../../components/ProfilePopup';
 
 const { postTypes } = require("../../constants");
 
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     },
     card: {
         //maxWidth can be modified based on giving garden page if required
-        maxWidth: 800,  
+        maxWidth: 800,
         backgroundColor: theme.palette.primary,
         margin: 'auto',
         marginBottom: '7.5px',
@@ -55,7 +56,10 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         margin: 0,
         left: "50%",
-    }
+    },
+    name: {
+      fontSize: 13
+    },
 }));
 
 
@@ -74,14 +78,18 @@ export default function Post(props) {
         <Grid item xs={12}>
             <Card className={[classes.root, classes.card].join(" ")} style={{ backgroundColor: ' #9badbd', color: 'white' }}>
                 <Grid container>
-                    <Grid item xs={9}>
-                        <CardHeader
+                    <Grid item xs={1} >
+                        <ProfilePopup user={props.user} pic={props.pic} authorEmail={props.authorEmail} />
+                        <Typography className={classes.name}> {props.user} </Typography>
+                    </Grid>
+                    <Grid item xs={8}>
+                        <CardHeader>
                             className={classes.post}
                             title={props.title}
                             subheader={props.postType === "OFFERING" ? postTypes.OFFERING : postTypes.ASKING}
                             subheaderTypographyProps={{ variant: 'subtitle2' }}
                             titleTypographyProps={{ variant: 'h5' }}
-                        />
+                        </CardHeader>
                         <Typography variant="body2" className={classes.post}>
                             {postText}
                         </Typography>

@@ -11,12 +11,10 @@ import NavBar from '../../components/NavBar'
 import { Button, TextField, Typography } from '@material-ui/core'
 
 import { connect } from 'react-redux';
-import { getAuthenticatedUserData, updateUserDetails, uploadUserImage } from '../../redux/actions/userActions'
+import { getAuthenticatedUserData, updateUserDetails, uploadUserImage, getUserData } from '../../redux/actions/userActions'
 
 const styles = (theme) => ({
     paper: {
-        // height: "90%",
-        width: "19%",
         padding: theme.spacing(2),
         display: "flex",
         flexDirection: "column",
@@ -26,6 +24,16 @@ const styles = (theme) => ({
         minWidth: "150px",
         minHeight: "150px",
     },
+    notchedOutline: {
+        borderWidth: '1px',
+        borderColor: '#666666 !important'
+    },
+    cssOutlinedInput: {
+        '&$cssFocused $notchedOutline': {
+          borderColor: `#BBBBBB !important`
+        }
+    },
+    cssFocused: {},
 });
 
 class ProfileView extends Component {
@@ -40,14 +48,19 @@ class ProfileView extends Component {
         };
     }
     async componentDidMount() {
-        await this.props.getAuthenticatedUserData();
-        const { credentials } = this.props.user.userData;
+        const userData = {
+            email: this.props.authorEmail
+        };
+        await this.props.getUserData(userData);
+        console.log(this.props.user.userData)
+
+        const authorCred = this.props.user.authorData;
         this.setState({
-            name: `${credentials.first} ${credentials.last}`,
-            email: credentials.email,
-            imageURL: credentials.imageUrl,
-            skills: credentials.skills,
-            intro: credentials.intro
+            name: `${authorCred.first} ${authorCred.last}`,
+            email: authorCred.email,
+            imageURL: authorCred.imageUrl,
+            skills: authorCred.skills,
+            intro: authorCred.intro
         })
     }
 
@@ -55,12 +68,12 @@ class ProfileView extends Component {
         const { classes } = this.props;
         return (
             <Paper className={classes.paper}>
-                <Avatar src={this.state.imageURL} className={classes.userIcon} style={{ marginBottom: 15 }}/>
-                <Typography variant="h5"> {this.state.name} </Typography>
-                <Typography variant="h6" style={{ marginBottom: 15 }}> {this.state.email} </Typography>
+                <Avatar src={this.state.imageURL} className={classes.userIcon} style={{ marginBottom: 10, marginTop: 10 }} />
+                <Typography variant="h6"> {this.state.name} </Typography>
+                <Typography variant="h7" style={{ marginBottom: 15 }}> {this.state.email} </Typography>
                 <TextField
                     id="standard-multiline-static"
-                    InputProps={{readOnly: true}}
+                    InputProps={{ readOnly: true }}
                     name="skills"
                     label="Skills"
                     fullWidth
@@ -69,10 +82,24 @@ class ProfileView extends Component {
                     variant="outlined"
                     value={this.state.skills || ''}
                     style={{ marginBottom: 20 }}
+                    InputLabelProps={{
+                        style: { color: '#666666' },
+                        classes: {
+                          root: classes.cssLabel,
+                          focused: classes.cssFocused
+                        }
+                    }}
+                    InputProps={{
+                        classes: {
+                            root: classes.cssOutlinedInput,
+                            focused: classes.cssFocused,
+                            notchedOutline: classes.notchedOutline,
+                        },
+                    }}
                 />
                 <TextField
                     id="standard-multiline-static"
-                    InputProps={{readOnly: true}}
+                    InputProps={{ readOnly: true }}
                     label="Introduction"
                     name="intro"
                     fullWidth
@@ -81,6 +108,20 @@ class ProfileView extends Component {
                     variant="outlined"
                     value={this.state.intro || ''}
                     style={{ marginBottom: 15 }}
+                    InputLabelProps={{
+                        style: { color: '#666666' },
+                        classes: {
+                          root: classes.cssLabel,
+                          focused: classes.cssFocused
+                        }
+                    }}
+                    InputProps={{
+                        classes: {
+                            root: classes.cssOutlinedInput,
+                            focused: classes.cssFocused,
+                            notchedOutline: classes.notchedOutline,
+                        },
+                    }}
                 />
             </Paper>
         )
@@ -90,11 +131,12 @@ class ProfileView extends Component {
 const mapDispatchToProps = {
     getAuthenticatedUserData: getAuthenticatedUserData,
     updateUserDetails: updateUserDetails,
-    uploadUserImage: uploadUserImage
+    uploadUserImage: uploadUserImage,
+    getUserData: getUserData
 };
 
 const mapStateToProps = (state) => ({
-    user: state.user
+    user: state.user,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(ProfileView));

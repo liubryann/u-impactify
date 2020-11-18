@@ -46,7 +46,6 @@ function App() {
                     <Route exact path="/giving-garden" render={() => isLoggedIn() ? <GivingGarden/> : <Redirect to='/login'/>}/>
                 </Switch>
             </Router>
-            <Footer/>
         </ThemeProvider>
     );
 }

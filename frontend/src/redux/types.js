@@ -26,6 +26,7 @@ export const USER_COURSES = 'USER_COURSES';
 export const USER_ERROR = 'USER_ERROR';
 export const USER_TYPE = 'USER_TYPE';
 export const SET_USER = 'SET_USER';
+export const GET_USER = 'GET_USER';
 export const UPDATE_USER = 'UPDATE_USER'
 export const UPLOAD_USER_IMAGE = 'UPLOAD_USER_IMAGE';
 //Posts Types

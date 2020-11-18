@@ -35,7 +35,7 @@ export default function PostWrapper(props) {
                     props.postType ? post.type === props.postType : post
                 ).filter((post) => post.title.toLowerCase().includes(props.searchTitle.toLowerCase()))
                 .slice(0,props.postLimit)
-                .map((post, index) => <Post key={index} title={post.title} postType={post.type} postContent={post.content}/>) }
+                .map((post, index) => <Post key={index} title={post.title} postType={post.type} postContent={post.content} user={post.authorName} authorEmail={post.authorEmail}/>) }
             </Grid>
         </div>
     )
