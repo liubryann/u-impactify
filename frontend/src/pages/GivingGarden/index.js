@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import CircularProgress from "@material-ui/core/CircularProgress";
 import CreateIcon from '@material-ui/icons/Create';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -19,7 +20,7 @@ import ScrollButton from "../../components/ScrollButton";
 import { withStyles } from '@material-ui/core';
 import { postTypes } from '../../constants';
 
-import { getAllPosts } from '../../redux/actions/postActions';
+import { getAllPosts, makePost } from '../../redux/actions/postActions';
 
 const styles = (theme) => ({
   searchField: {
@@ -29,6 +30,12 @@ const styles = (theme) => ({
     display: "flex",
     justifyContent: 'center',
   },
+  progress: {
+    position: 'absolute',
+  },
+  fade: {
+    opacity: "20%"
+  },
   grid: {
     margin: "17px",
     display: 'flex',
@@ -36,6 +43,11 @@ const styles = (theme) => ({
   },
   button: {
     display: "flex",
+  },
+  error: {
+    color: 'red',
+    fontSize: '0.8rem',
+    marginTop: 10
   }
 });
 
@@ -49,12 +61,19 @@ class GivingGarden extends Component {
       showPopup: false,
       title: "",
       postType: "",
-      postContent: ""
+      postContent: "",
+      error: {}
     };
   };
 
   componentDidMount() {
     this.props.getAllPosts();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.posts.error !== prevProps.posts.error) {
+      this.setState({ error: this.props.posts.error });
+    }
   }
 
   CheckBoxWrapper(label, value, name) {
@@ -91,17 +110,18 @@ class GivingGarden extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    // const newPostData = {
-    //   title: this.state.title,
-    //   postType: this.state.postType,
-    //   postContent: this.state.postContent
-    // };
-    //this.props. /* REDUX ACTION GOES HERE */
+    const newPostData = {
+      title: this.state.title,
+      type: this.state.postType,
+      content: this.state.postContent
+    };
+    this.props.makePost(newPostData) 
   };
 
   render() {
     const { classes } = this.props;
-    const { posts } = this.props.posts;
+    const { posts, loading } = this.props.posts;
+    const { error } = this.state;
     return (
       <div >
         <NavBar />
@@ -172,6 +192,8 @@ class GivingGarden extends Component {
                   fullWidth
                   onChange={this.handleInput}
                   InputLabelProps={{ shrink: true }}
+                  helperText={error.title}
+                  error={error.title ? true : false}
                 />
                 <TextField
                   required
@@ -186,6 +208,8 @@ class GivingGarden extends Component {
                   variant="outlined"
                   onChange={this.handleInput}
                   InputLabelProps={{ shrink: true }}
+                  helperText={error.content}
+                  error={error.content ? true : false}
                 />
                 <Typography variant="subtitle2"> I am posting to : </Typography>
                 <Grid container justify='space-evenly' alignItems='center'>
@@ -203,14 +227,22 @@ class GivingGarden extends Component {
                       "postType"
                     )}
                   </Grid>
+                  {error.type && (
+                    <Typography variant="body2" className={classes.error}>
+                      {error.type}
+                    </Typography>
+                  )}
                 </Grid>
               </DialogContent>
               <DialogActions>
-                <Button onClick={this.handlePopup} color="primary">
+                <Button onClick={this.handlePopup} color="primary" disabled={loading}>
                   Cancel
                 </Button>
-                <Button type="submit" onClick={this.handleSubmit} color="primary">
+                <Button className={loading ? classes.fade : ""} type="submit" onClick={this.handleSubmit} color="primary">
                   Create
+                  {loading && (
+                     <CircularProgress color="secondary" size={25} className={classes.progress} />
+                    )}
                 </Button>
               </DialogActions>
             </Dialog>
@@ -230,7 +262,8 @@ class GivingGarden extends Component {
 
 
 const mapDispatchToProps = {
-  getAllPosts: getAllPosts
+  getAllPosts: getAllPosts,
+  makePost: makePost
 };
 
 const mapStateToProps = (state) => ({

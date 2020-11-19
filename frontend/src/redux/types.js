@@ -30,5 +30,7 @@ export const GET_USER = 'GET_USER';
 export const UPDATE_USER = 'UPDATE_USER'
 export const UPLOAD_USER_IMAGE = 'UPLOAD_USER_IMAGE';
 //Posts Types
+export const POST_CREATION_START = "POST_CREATION_START"
+export const POST_CREATION_SUCCESS = "POST_CREATION_SUCCESS"
 export const SET_POSTS = 'SET_POSTS';
 export const POST_ERROR = 'POST_ERROR';

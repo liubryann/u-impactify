@@ -112,7 +112,6 @@ exports.validateUserDetails = (data) => {
 
 exports.validatePostCreation = (data) => {
   let errors = {};
-
   if (isEmpty(data.title)) {
     errors.title = 'Must not be empty';
   }
@@ -120,7 +119,7 @@ exports.validatePostCreation = (data) => {
     errors.content = 'Must not be empty';
   }
   if (data.type !== postTypes.OFFERING_STR && data.type !== postTypes.ASKING_STR) {
-    errors.type = 'Invalid type';
+    errors.type = 'Must choose valid type';
   }
   return {
     errors,
