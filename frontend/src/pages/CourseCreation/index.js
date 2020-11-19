@@ -279,9 +279,9 @@ export class CourseCreation extends Component {
 
         let outline = (
           this.state.sections.map((section) => 
-              <TreeItem nodeId={section} label={section}>
+              <TreeItem key={section} nodeId={section} label={section}>
                 {this.state[section].map((subsection) => 
-                <TreeItem nodeId={`${section};${subsection}`} label={subsection}/> )}
+                <TreeItem key={`${section};${subsection}`} nodeId={`${section};${subsection}`} label={subsection}/> )}
                 <Input 
                   id={section} 
                   name={`${section}Value`} 
