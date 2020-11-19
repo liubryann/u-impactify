@@ -1,4 +1,4 @@
-const { admin, db, storage } = require("../util/admin");
+const { admin, db } = require("../util/admin");
 const config = require("../util/config")
 const { userTypes } = require('../util/constants');
 const { validateCourseCreation } = require("../util/validators");
@@ -106,8 +106,9 @@ exports.uploadImage = (req, res) => {
     file.pipe(fs.createWriteStream(filepath));
   });
   busboy.on("finish", () => {
-    storage
-      .bucket(config.bucket)
+    admin
+      .storage()
+      .bucket()
       .upload(imageToBeUploaded.filepath, {
         resumable: false,
         metadata: {

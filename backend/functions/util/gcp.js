@@ -1,9 +1,9 @@
 const {Storage} = require('@google-cloud/storage');
 const { uuid } = require("uuidv4");
 const config = require("../util/config")
-const projectId = 'cscc01-b55d7';
+const projectId = `${config.projectId}`;
 const keyFilename = './util/keyfile.json';
-const bucketName = config.bucketName;
+const bucketName = `${config.storageBucket}`;
 const storage = new Storage({ projectId, keyFilename });
 
 async function generateV4UploadSignedUrl(vidName) {
