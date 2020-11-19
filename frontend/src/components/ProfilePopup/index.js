@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
   author: {
     paddingTop: theme.spacing(2),
-    paddingBottom: theme.spacing(2),
+    // paddingBottom: theme.spacing(2),
   },
   popOver: {
     pointerEvents: "none"

@@ -10,6 +10,8 @@ import Divider from "@material-ui/core/Divider";
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import ProfilePopup from '../../components/ProfilePopup';
+import Box from '@material-ui/core/Box';
+import Avatar from '@material-ui/core/Avatar';
 
 const { postTypes } = require("../../constants");
 
@@ -58,7 +60,9 @@ const useStyles = makeStyles((theme) => ({
         left: "50%",
     },
     name: {
-      fontSize: 13
+        justifyContent: "center",
+        alignContent: "center",
+        padding: 12
     },
 }));
 
@@ -83,13 +87,13 @@ export default function Post(props) {
                         <Typography className={classes.name}> {props.user} </Typography>
                     </Grid>
                     <Grid item xs={8}>
-                        <CardHeader>
+                        <CardHeader
                             className={classes.post}
                             title={props.title}
                             subheader={props.postType === "OFFERING" ? postTypes.OFFERING : postTypes.ASKING}
                             subheaderTypographyProps={{ variant: 'subtitle2' }}
                             titleTypographyProps={{ variant: 'h5' }}
-                        </CardHeader>
+                        />
                         <Typography variant="body2" className={classes.post}>
                             {postText}
                         </Typography>

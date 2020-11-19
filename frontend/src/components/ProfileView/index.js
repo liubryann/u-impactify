@@ -52,7 +52,6 @@ class ProfileView extends Component {
             email: this.props.authorEmail
         };
         await this.props.getUserData(userData);
-        console.log(this.props.user.userData)
 
         const authorCred = this.props.user.authorData;
         this.setState({

@@ -121,6 +121,9 @@ exports.validatePostCreation = (data) => {
   if (data.type !== postTypes.OFFERING_STR && data.type !== postTypes.ASKING_STR) {
     errors.type = 'Must choose valid type';
   }
+  if (isEmpty(data.authorImageUrl)) {
+    errors.authorImageUrl = 'Must not be empty';
+  }
   return {
     errors,
     valid: Object.keys(errors).length === 0 ? true : false

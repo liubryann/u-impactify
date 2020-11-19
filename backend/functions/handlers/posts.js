@@ -25,6 +25,7 @@ exports.getAllPosts = (req, res) => {
             let posts = []; 
             data.forEach((doc) => {
                 posts.push({
+                    authorImageUrl: doc.data().authorImageUrl,
                     authorEmail: doc.data().authorEmail,
                     authorName: doc.data().authorName,
                     postId: doc.id, 
@@ -48,7 +49,8 @@ exports.makePost = (req, res) => {
       content: req.body.content,
       type: req.body.type,
       authorName: req.user.name,
-      authorEmail: req.user.email
+      authorEmail: req.user.email,
+      authorImageUrl: req.user.imageUrl
     }
     const { valid, errors } = validatePostCreation(newPost);
     if (!valid) return res.status(400).json(errors);
