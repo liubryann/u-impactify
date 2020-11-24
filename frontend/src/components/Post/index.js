@@ -90,7 +90,7 @@ export default function Post(props) {
                         <CardHeader
                             className={classes.post}
                             title={props.title}
-                            subheader={props.postType === "OFFERING" ? postTypes.OFFERING : postTypes.ASKING}
+                            subheader={props.postType === postTypes.OFFERING_STR ? postTypes.OFFERING : postTypes.ASKING}
                             subheaderTypographyProps={{ variant: 'subtitle2' }}
                             titleTypographyProps={{ variant: 'h5' }}
                         />
