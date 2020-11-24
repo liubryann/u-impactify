@@ -1,5 +1,5 @@
 import {
-  GETCOURSE,
+  GET_COURSE,
   COURSE_ERROR,
   SET_COURSES,
   COURSE_CREATION_SUCCESS, 
@@ -16,16 +16,11 @@ import API from '../../api';
 import axios from 'axios';
 
 export const getCourse = (courseId) => (async dispatch => {
-  await API.post('/getCourse', { courseId })
+  await API.get('/getCourse', {"params": { courseId } })
     .then((response) => {
-      const { name, instructor, overview } = response.data;
       dispatch({
-        type: GETCOURSE,
-        payload: {
-          name,
-          instructor,
-          overview
-        },
+        type: GET_COURSE,
+        payload: response.data,
       });
     })
     .catch((err) => {

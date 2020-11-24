@@ -10,7 +10,7 @@ const { uuid } = require("uuidv4");
 const { generateV4UploadSignedUrl, generateV4DownloadSignedUrl } = require('../util/gcp');
 
 exports.getCourse = (req, res) => {
-  const { courseId } = req.body;
+  const { courseId } = req.query;
   db.doc(`/courses/${courseId}`).get()
     .then(doc => {
       if (doc.exists) {

@@ -9,7 +9,7 @@ export const LOGIN_START = 'LOGIN_START';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 // Course Types
-export const GETCOURSE = 'GETCOURSE';
+export const GET_COURSE = 'GETCOURSE';
 export const COURSE_ERROR = 'COURSE_ERROR';
 export const SET_COURSES = 'SET_COURSES'; 
 export const COURSE_CREATION_SUCCESS = 'COURSE_CREATION_SUCCESS';
