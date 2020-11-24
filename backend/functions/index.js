@@ -20,7 +20,7 @@ firebase.initializeApp(config);
 app.post('/signup', signup);
 app.post('/login', login);
 app.get('/userCourses', fbAuth, userCourses);
-app.post('/getCourse', getCourse)
+app.get('/getCourse', getCourse)
 app.post('/userType', userType)
 app.get('/getAllCourses', getAllCourses);
 app.post('/makeCourse', fbAuth, makeCourse);

@@ -14,7 +14,7 @@ exports.getCourse = (req, res) => {
   db.doc(`/courses/${courseId}`).get()
     .then(doc => {
       if (doc.exists) {
-        return res.status(201).json(doc.data());
+        return res.status(200).json(doc.data());
       } else {
         return res.status(404).json({ error: "No such course" });
       }
