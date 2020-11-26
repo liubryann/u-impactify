@@ -20,6 +20,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 
 import { connect } from 'react-redux';
+import { withRouter, Link } from 'react-router-dom';
 import { enrollInCourse, resetAlert } from '../../redux/actions/coursesActions';
 
 const useStyles = makeStyles((theme) => ({
@@ -82,7 +83,7 @@ function CourseCard(props) {
 
     return (
         <Card className={classes.root, classes.card} style={{ backgroundColor: ' #9badbd', color: 'white' }}>
-            <CardActionArea>
+            <CardActionArea component={Link} to={`/course/${props.course.courseId}`}>
                 <CardMedia
                     component="img"
                     height="140"
@@ -128,7 +129,7 @@ function CourseCard(props) {
             </Container>
             <Snackbar open={ props.courses.enroll } autoHideDuration={3000} onClose={ onClose }>
                 <MuiAlert severity={ "success" }>
-                  { "Enrolled!" }
+                { "Enrolled!" }
                 </MuiAlert>
             </Snackbar>
             <Snackbar open={ props.courses.error.error } autoHideDuration={3000} onClose={ onClose }>
@@ -149,4 +150,4 @@ const mapDispatchToProps = {
     resetAlert: resetAlert
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(CourseCard);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CourseCard));

@@ -11,6 +11,7 @@ import Profile from './pages/Profile';
 import Courses from './pages/Courses';
 import CourseCreation from './pages/CourseCreation';
 import GivingGarden from './pages/GivingGarden';
+import CourseMaterial from './pages/CourseMaterial';
 //Redux
 import { isLoggedIn } from './redux/actions/authActions'
 import Footer from './components/Footer';
@@ -44,6 +45,7 @@ function App() {
                     <Route exact path="/course-creation" render={() => isLoggedIn() ? <CourseCreation /> : <Redirect to='/login'/> }/>
                     <Route exact path="/profile" render={() => <Profile />} />
                     <Route exact path="/giving-garden" render={() => isLoggedIn() ? <GivingGarden/> : <Redirect to='/login'/>}/>
+                    <Route path="/course/:id" children={<CourseMaterial/>} />
                 </Switch>
             </Router>
         </ThemeProvider>
