@@ -12,9 +12,16 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
     },
     description:{
-        textAlign:"center"
-        
+        marginTop: theme.spacing(1)
     },
+    title: {
+        marginBottom: theme.spacing(1)
+    },
+    paper: {
+        padding: theme.spacing(3),
+        height: '100%'
+    },
+
 
 }));
 
@@ -25,18 +32,14 @@ function VideoPlayer(props){
     const { summary } = props;
 
     return(
-    <Grid container direction="column" alignItems="center" justify="center">
-        <Grid item xs={3}>
-            <Typography variant="h4">{title}</Typography>
-        </Grid>   
-        <Grid item xs={12}>
-            <ReactPlayer controls="true" url={url}/>
-            <Typography variant="h6">Summary</Typography>
-            <Paper className={classes.description}>
-                {summary}
-            </Paper>
-        </Grid> 
-    </Grid> 
+    <Paper elevation={3} className={classes.paper}>
+        <Typography variant="h6" className={classes.title} >{title}</Typography>
+        <div>
+            <ReactPlayer controls={true} url={url} width='100%' height='100%'/>
+        </div>
+        <Typography variant="h6" className={classes.description}>Description</Typography>
+        <Typography variant="body1">{summary}</Typography>
+    </Paper>
 )}
 
 VideoPlayer.propTypes = {
