@@ -7,6 +7,7 @@ import CourseWrapper from '../../components/Coursewrapper';
 import { connect } from 'react-redux';
 import { getAllCourses } from '../../redux/actions/coursesActions';
 import { userTypeDetails } from '../../redux/actions/userActions';
+import {userCourses } from '../../redux/actions/userActions';
 
 import { userTypes } from '../../constants';
 
@@ -33,13 +34,15 @@ class Courses extends Component {
     componentDidMount() {
       this.props.getAllCourses();
       this.props.userTypeDetails();
+      this.props.userCourses();
     }
     
     
     render() {
       const { classes } = this.props;
       const { courses } = this.props.courses;
-      const { userType } = this.props.user;
+      const { userType, userCourses } = this.props.user;
+      var coursesNotEnrolledIn = courses.filter(course => !userCourses.some(userCourse => userCourse.courseId === course.courseId));
       var isStudent;
       userType == userTypes.IMPACT_LEARNER ? isStudent = true : isStudent = false;
       return(
@@ -49,7 +52,7 @@ class Courses extends Component {
               <Grid item xs={12} className={classes.item}>
                 <h1 className={classes.title}>Courses</h1>
                 <Paper className={classes.paper}>
-                  <CourseWrapper enrolled= {false} isStudent={isStudent} courses={courses}/>
+                  <CourseWrapper enrolled= {false} isStudent={isStudent} courses={coursesNotEnrolledIn}/>
                 </Paper>
               </Grid>
           </Grid>
@@ -60,7 +63,8 @@ class Courses extends Component {
 
 const mapDispatchToProps = {
   getAllCourses: getAllCourses,
-  userTypeDetails: userTypeDetails
+  userTypeDetails: userTypeDetails,
+  userCourses: userCourses
 };
 
 const mapStateToProps = (state) => ({
