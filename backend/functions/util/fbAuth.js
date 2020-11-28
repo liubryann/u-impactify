@@ -28,6 +28,7 @@ module.exports = (req, res, next) => {
        req.user.email = data.docs[0].data().email;
        req.user.name = data.docs[0].data().first + " " + data.docs[0].data().last
        req.user.imageUrl = data.docs[0].data().imageUrl;
+       req.user.type = data.docs[0].data().type;
        return next();
      })
      .catch((err) => {

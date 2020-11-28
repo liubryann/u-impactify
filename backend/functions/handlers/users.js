@@ -234,3 +234,52 @@ exports.enrollInCourse = (req, res) => {
         });
 }
 
+exports.updateUserSettings = (req, res) => {
+    
+    const { valid, errors } = validateUserSettingsDetails(req);
+    if (!valid) return res.status(400).json(errors);
+
+    const newUserSettingsDetails = {};
+    if(req.user.type === userTypes.SOCIAL_INITIATIVE){
+        newUserSettingsDetails = {
+            org: req.body.org
+        };
+    } else {
+        newUserSettingsDetails = {
+            first: req.body.first,
+            last: req.body.last,
+        };
+    }
+
+    const newUserCredentials = {
+        email: req.user.email,
+        password: req.body.currentPassword,
+    }
+
+    var user = firebase.auth().currentUser;
+
+    user.reauthenticateWithCredential(newUserCredentials)
+        .then(() => {
+            user.updatePassword(req.body.newPassword)
+                .catch(err => {
+                    console.error(err);
+                    res.status(500).json({ error: err.code })
+                });
+        }).catch(err => {
+            console.error(err);
+            res.status(500).json({ error: err.code })
+        });
+
+    db.collection('users').doc(req.user.email)
+        .update(
+            newUserSettingsDetails
+        )
+        .then(() => {
+            return res.status(200).json()
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).json({ error: err.code })
+        });
+
+}
