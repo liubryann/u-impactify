@@ -73,7 +73,7 @@ class NavBar extends Component {
             <Button className={classes.button} onClick={() => (window.location.href = '/courses')}>
               <Typography>Courses</Typography>
             </Button>
-            <Button className={classes.button}>
+            <Button className={classes.button} onClick={() => (window.location.href = '/settings')}>
               <Typography>Settings</Typography>
             </Button>
             <div className={classes.grow}/>

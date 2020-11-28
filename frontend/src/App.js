@@ -15,6 +15,7 @@ import CourseMaterial from './pages/CourseMaterial';
 //Redux
 import { isLoggedIn } from './redux/actions/authActions'
 import Footer from './components/Footer';
+import Settings from './pages/Settings';
 
 const theme = createMuiTheme({
   palette: {
@@ -45,6 +46,7 @@ function App() {
                     <Route exact path="/course-creation" render={() => isLoggedIn() ? <CourseCreation /> : <Redirect to='/login'/> }/>
                     <Route exact path="/profile" render={() => <Profile />} />
                     <Route exact path="/giving-garden" render={() => isLoggedIn() ? <GivingGarden/> : <Redirect to='/login'/>}/>
+                    <Route exact path="/settings" render={() => isLoggedIn() ? <Settings/> : <Redirect to='/login'/>}/>
                     <Route path="/course/:id" children={<CourseMaterial/>} />
                 </Switch>
             </Router>
