@@ -20,6 +20,8 @@ export const VIDEO_UPLOAD_SUCCESS = 'VIDEO_UPLOAD_SUCCESS';
 export const VIDEO_UPLOAD_START = 'VIDEO_UPLOAD_START';
 export const ENROLL_SUCCESS = 'ENROLL_SUCCESS';
 export const ENROLL_ERROR = 'ENROLL_ERROR';
+export const DROP_SUCCESS = 'DROP_SUCCESS';
+export const DROP_ERROR = 'DROP_ERROR';
 export const RESET_ALERT = 'RESET_ALERT';
 //User Types
 export const USER_COURSES = 'USER_COURSES';

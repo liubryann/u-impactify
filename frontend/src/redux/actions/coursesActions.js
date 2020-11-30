@@ -10,6 +10,8 @@ import {
   COURSE_CREATION_START,
   ENROLL_SUCCESS, 
   ENROLL_ERROR, 
+  DROP_SUCCESS,
+  DROP_ERROR,
   RESET_ALERT
 } from '../types';
 import API from '../../api';
@@ -139,6 +141,25 @@ export const enrollInCourse = (courseId) => (async dispatch => {
   .catch(err => {
     dispatch({
       type: ENROLL_ERROR, 
+      payload: err.response.data
+    })
+  })
+})
+
+export const dropCourse = (courseId) => (async dispatch => {
+  await API.post('/dropCourse', {courseId}, {
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem('idToken')}`
+    }
+  })
+  .then(() => {
+    dispatch({
+      type: DROP_SUCCESS
+    })
+  })
+  .catch(err => {
+    dispatch({
+      type: DROP_ERROR, 
       payload: err.response.data
     })
   })

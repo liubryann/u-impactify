@@ -5,7 +5,7 @@ app = express();
 
 const { getCourse, makeCourse, getAllCourses, uploadImage, generateSignedURL  } = require('./handlers/courses');
 const { getPost, getAllPosts, makePost } = require('./handlers/posts');
-const { signup, login, userCourses, userType, getAuthenticatedUser, getUserDetails, updateUserDetails, enrollInCourse } = require('./handlers/users');
+const { signup, login, userCourses, userType, getAuthenticatedUser, getUserDetails, updateUserDetails, enrollInCourse, dropCourse } = require('./handlers/users');
 const fbAuth = require('./util/fbAuth');
 
 
@@ -33,5 +33,6 @@ app.get('/getUserDetails', getUserDetails);
 app.put('/updateUserDetails', fbAuth, updateUserDetails);
 app.get('/generateSignedURL', fbAuth, generateSignedURL);
 app.post('/enrollInCourse', fbAuth, enrollInCourse);
+app.post('/dropCourse', fbAuth, dropCourse);
 
 exports.api = functions.https.onRequest(app);

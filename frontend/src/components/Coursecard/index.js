@@ -21,7 +21,7 @@ import MuiAlert from '@material-ui/lab/Alert';
 
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
-import { enrollInCourse, resetAlert } from '../../redux/actions/coursesActions';
+import { enrollInCourse, dropCourse, resetAlert } from '../../redux/actions/coursesActions';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -74,6 +74,8 @@ function CourseCard(props) {
     const onClick = () => {
         if (!props.enrolled) {
             props.enrollInCourse(props.course.courseId);
+        } else {
+            props.dropCourse(props.course.courseId);
         }
     }
 
@@ -124,12 +126,17 @@ function CourseCard(props) {
             </Collapse>
             <Container align='center'>
                 <Typography variant='caption' align="center">
-                {props.isStudent && (<Button onClick={onClick}> {(!props.enrolled) ? "Enroll" : "Unenroll"} </Button>)}
+                {props.isStudent && (<Button onClick={onClick}> {(!props.enrolled) ? "Enroll" : "Drop"} </Button>)}
                 </Typography>
             </Container>
             <Snackbar open={ props.courses.enroll } autoHideDuration={3000} onClose={ onClose }>
                 <MuiAlert severity={ "success" }>
                 { "Enrolled!" }
+                </MuiAlert>
+            </Snackbar>
+            <Snackbar open={ props.courses.drop } autoHideDuration={3000} onClose={ onClose }>
+                <MuiAlert severity={ "success" }>
+                { "Dropped!" }
                 </MuiAlert>
             </Snackbar>
             <Snackbar open={ props.courses.error.error } autoHideDuration={3000} onClose={ onClose }>
@@ -147,6 +154,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     enrollInCourse: enrollInCourse,
+    dropCourse: dropCourse,
     resetAlert: resetAlert
 };
 

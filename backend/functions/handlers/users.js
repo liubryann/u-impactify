@@ -234,6 +234,17 @@ exports.enrollInCourse = (req, res) => {
         });
 }
 
+exports.dropCourse = (req, res) => {
+    const { courseId } = req.body;
+    db.collection(`users/${req.user.email}/courses`).doc(`${courseId}`).delete({})
+        .then(() => {
+            return res.status(200).json();
+        })
+        .catch((err) => {
+            return res.status(400).json({ error: err.code });
+        });
+}
+
 exports.updateUserSettings = (req, res) => {
     
     const { valid, errors } = validateUserSettingsDetails(req);

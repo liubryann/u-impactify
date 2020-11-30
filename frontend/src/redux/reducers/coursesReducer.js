@@ -11,6 +11,8 @@ import
   IMAGE_UPLOAD_SUCCESS,
   ENROLL_SUCCESS,
   ENROLL_ERROR,
+  DROP_SUCCESS,
+  DROP_ERROR,
   RESET_ALERT
  } from '../types';
 
@@ -30,6 +32,7 @@ const initialState = {
   loading: false,
   videoURL: "",
   enroll: false, 
+  drop: false,
   error: {},
   sections: [],
 }
@@ -97,11 +100,23 @@ export default function (state = initialState, action) {
         ...state, 
         error: action.payload
       }
+    case DROP_SUCCESS: 
+      return { 
+        ...state, 
+        error: {},
+        drop: true
+      }
+    case DROP_ERROR:
+      return {
+        ...state, 
+        error: action.payload
+      }
     case RESET_ALERT:
       return {
         ...state, 
         error: {},
-        enroll: false
+        enroll: false,
+        drop: false
       }
     default:
       return state;
