@@ -91,13 +91,6 @@ exports.login = (req, res) => {
             return data.user.getIdToken();
         })
         .then(token => {
-            firebase.auth().onAuthStateChanged(function(user) {
-                if (user) {
-                  console.log("signed in");
-                } else {
-                    console.log("login failed");
-                }
-              });
             return res.status(201).json({ token });
         })
         .catch(err => {
@@ -268,35 +261,43 @@ exports.updateUserSettings = async (req, res) => {
         };
     }
 
-    const newUserCredentials = {
-        email: req.user.email,
-        password: req.body.currentPassword,
-    }
-
-    var user = await firebase.auth().currentUser;
-
-    user.reauthenticateWithCredential(newUserCredentials)
+    firebase.auth().signInWithEmailAndPassword(req.user.email, req.body.currentPassword)
         .then(() => {
-            user.updatePassword(req.body.newPassword)
-                .catch(err => {
-                    console.error(err);
-                    res.status(500).json({ error: err.code })
-                });
-        }).catch(err => {
-            console.error(err);
-            res.status(500).json({ error: err.code })
-        });
-
-    db.collection('users').doc(req.user.email)
-        .update(
-            newUserSettingsDetails
-        )
-        .then(() => {
-            return res.status(200).json()
+            firebase.auth().onAuthStateChanged(function(user) {
+                if (user) {
+                    user.updatePassword(req.body.newPassword)
+                    .then(() => {
+                        db.collection('users').doc(req.user.email)
+                            .update(
+                                newUserSettingsDetails
+                            )
+                            .then(() => {
+                                return res.status(200).json()
+                            })
+                            .catch(err => {
+                                console.error(err);
+                                res.status(500).json({ error: err.code })
+                            });
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        res.status(500).json({ error: err.code })
+                    });
+                } else {
+                    console.log("login failed");
+                }
+              });
         })
         .catch(err => {
-            console.error(err);
-            res.status(500).json({ error: err.code })
+            console.log(err)
+            if (err.code === 'auth/wrong-password') {
+                return res.status(403).json({ currentPassword : "Wrong Password"})
+            }
+            else {
+                return res.status(500).json({ error: err.code });
+            }
         });
+
+    
 
 }

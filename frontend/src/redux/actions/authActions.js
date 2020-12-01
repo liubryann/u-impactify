@@ -51,19 +51,18 @@ export const signupUser = (newUserData, history) => (async dispatch => {
   });
 
 
-export const updateUser = (userData) => (async dispatch => {
+export const updateUser = (userData, updateSuccess) => (async dispatch => {
     dispatch({ type: UPDATE_START });
-    console.log("starting actions")
     await API.put('/updateUserSettings', userData, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('idToken')}`
         }
         })
         .then((res) => {
-            console.log(res);
           dispatch({
             type: UPDATE_SUCCESS
           })
+          updateSuccess();
         })
         .catch(err => {
             console.log(err)

@@ -112,7 +112,7 @@ class Settings extends Component {
     };
 
     handleSubmit = (event) => {
-      //event.preventDefault();
+      event.preventDefault();
         const userData = {
           first: this.state.first,
           last: this.state.last,
@@ -121,7 +121,9 @@ class Settings extends Component {
           newPassword: this.state.newPassword,
           confirmPassword: this.state.confirmPassword,
         };
-        this.props.updateUser(userData);
+        this.props.updateUser(userData,
+          function updateSuccess() { window.location.reload(); }
+          );
       };
 
       nameField(userType, errors) {
