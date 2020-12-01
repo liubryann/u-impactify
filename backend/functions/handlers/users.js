@@ -1,5 +1,5 @@
 const { admin, db } = require("../util/admin");
-const { validateSignupData, validateLoginData, validateUserDetails } = require('../util/validators');
+const { validateSignupData, validateLoginData, validateUserDetails, validateUserSettingsDetails } = require('../util/validators');
 const { userTypes } = require('../util/constants');
 const { user } = require("firebase-functions/lib/providers/auth");
 const firebase = require("firebase");
@@ -91,6 +91,13 @@ exports.login = (req, res) => {
             return data.user.getIdToken();
         })
         .then(token => {
+            firebase.auth().onAuthStateChanged(function(user) {
+                if (user) {
+                  console.log("signed in");
+                } else {
+                    console.log("login failed");
+                }
+              });
             return res.status(201).json({ token });
         })
         .catch(err => {
@@ -245,12 +252,11 @@ exports.dropCourse = (req, res) => {
         });
 }
 
-exports.updateUserSettings = (req, res) => {
-    
+exports.updateUserSettings = async (req, res) => {
     const { valid, errors } = validateUserSettingsDetails(req);
     if (!valid) return res.status(400).json(errors);
-
-    const newUserSettingsDetails = {};
+    
+    var newUserSettingsDetails = {};
     if(req.user.type === userTypes.SOCIAL_INITIATIVE){
         newUserSettingsDetails = {
             org: req.body.org
@@ -267,7 +273,7 @@ exports.updateUserSettings = (req, res) => {
         password: req.body.currentPassword,
     }
 
-    var user = firebase.auth().currentUser;
+    var user = await firebase.auth().currentUser;
 
     user.reauthenticateWithCredential(newUserCredentials)
         .then(() => {

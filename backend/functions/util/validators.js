@@ -145,7 +145,7 @@ exports.validateUserSettingsDetails = (data) => {
   if (isEmpty(data.body.confirmPassword)) {
     errors.confirmPassword = 'Must not be empty';
   }
-  else if (data.body.newPassword !== data.confirmPassword) {
+  else if (data.body.newPassword !== data.body.confirmPassword) {
     errors.confirmPassword = 'Passwords must match';
   }
   if (data.user.type === userTypes.SOCIAL_INITIATIVE) {

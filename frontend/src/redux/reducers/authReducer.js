@@ -1,4 +1,4 @@
-import { LOGIN_START, LOGIN_SUCCESS, LOGIN_ERROR, SIGNUP_START, SIGNUP_ERROR, SIGNUP_SUCCESS } from '../types';
+import { LOGIN_START, LOGIN_SUCCESS, LOGIN_ERROR, SIGNUP_START, SIGNUP_ERROR, SIGNUP_SUCCESS, UPDATE_START, UPDATE_SUCCESS, UPDATE_ERROR } from '../types';
 
 const initialState = {
     loading: false,
@@ -38,6 +38,22 @@ export default function(state = initialState, action){
             return {
                 ...state,
                 loading: true
+            };
+        case UPDATE_START:
+            return {
+                ...state,
+                loading: true
+            };
+        case UPDATE_SUCCESS:
+            return {
+                ...state,
+                loading: false
+            };
+        case UPDATE_ERROR:
+            return {
+                ...state,
+                loading: false,
+                authErrors: action.payload
             };
         default:
             return state

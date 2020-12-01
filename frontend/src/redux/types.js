@@ -4,6 +4,9 @@ export const LOGIN = 'LOGIN';
 export const SIGNUP_ERROR = 'SIGNUP_ERROR'; 
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS'; 
 export const SIGNUP_START = 'SIGNUP_START'; 
+export const UPDATE_START = 'UPDATE_START'; 
+export const UPDATE_SUCCESS = 'UPDATE_SUCCESS'; 
+export const UPDATE_ERROR = 'UPDATE_ERROR'; 
 // Auth Types
 export const LOGIN_START = 'LOGIN_START';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';

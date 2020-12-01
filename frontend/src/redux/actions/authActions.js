@@ -1,4 +1,4 @@
-import {  LOGIN_START, LOGIN_SUCCESS, LOGIN_ERROR, SIGNUP_START, SIGNUP_ERROR, SIGNUP_SUCCESS } from '../types';
+import {  LOGIN_START, LOGIN_SUCCESS, LOGIN_ERROR, SIGNUP_START, SIGNUP_ERROR, SIGNUP_SUCCESS, UPDATE_START, UPDATE_SUCCESS, UPDATE_ERROR } from '../types';
 import API from '../../api';
 import axios from 'axios';
 
@@ -49,6 +49,30 @@ export const signupUser = (newUserData, history) => (async dispatch => {
         dispatch({ type: SIGNUP_ERROR, payload: err.response.data });
         })
   });
+
+
+export const updateUser = (userData) => (async dispatch => {
+    dispatch({ type: UPDATE_START });
+    console.log("starting actions")
+    await API.put('/updateUserSettings', userData, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('idToken')}`
+        }
+        })
+        .then((res) => {
+            console.log(res);
+          dispatch({
+            type: UPDATE_SUCCESS
+          })
+        })
+        .catch(err => {
+            console.log(err)
+            dispatch({
+            type: UPDATE_ERROR,
+            payload: err.response.data 
+          })
+        })
+});
 
 const setAuthHeader = (token) => {
     const idToken = `Bearer ${token}`;

@@ -5,6 +5,11 @@ import Paper from '@material-ui/core/Paper'
 import withStyles from "@material-ui/core/styles/withStyles"
 import NavBar from '../../components/NavBar'
 import { Button, TextField, Typography } from '@material-ui/core'
+
+import { updateUser } from '../../redux/actions/authActions'
+import { connect } from 'react-redux';
+import { getAuthenticatedUserData } from '../../redux/actions/userActions'
+
 const { userTypes } = require("../../constants");
 
 const styles = (theme) => ({
@@ -69,16 +74,36 @@ class Settings extends Component {
     constructor() {
       super();
       this.state = {
-        userType: "Social Initiative",    //this.props.userType after redux
-        first: "Random",                  //this.props.first after redux
-        last: "Name",                     //this.props.last after redux
-        org: "Organization name",         //this.props.org after redux
+        userType: "",               //this.props.userType after redux
+        first: "",                  //this.props.first after redux
+        last: "",                   //this.props.last after redux
+        org: "",                    //this.props.org after redux
+        imageURL: "",
         currentPassword: "",
         newPassword: "",
         confirmPassword: "",
-        errors: {},
+        error: {},
       };
     }
+
+    async componentDidMount() {
+      await this.props.getAuthenticatedUserData();
+      const { credentials } = this.props.user.userData;
+      this.setState({
+          first: credentials.first,
+          last: credentials.last,
+          org: credentials.org,
+          email: credentials.email,
+          imageURL: credentials.imageUrl,
+          userType: credentials.userType,
+      })
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.auth.authErrors !== prevProps.auth.authErrors) {
+      this.setState({ error: this.props.auth.authErrors });
+    }
+  }
 
     handleChange = (event) => {
         this.setState({
@@ -87,8 +112,8 @@ class Settings extends Component {
     };
 
     handleSubmit = (event) => {
-        const newUserData = {
-          userType: this.state.userType,
+      //event.preventDefault();
+        const userData = {
           first: this.state.first,
           last: this.state.last,
           org: this.state.org,
@@ -96,7 +121,7 @@ class Settings extends Component {
           newPassword: this.state.newPassword,
           confirmPassword: this.state.confirmPassword,
         };
-        //call redux to submit changes;
+        this.props.updateUser(userData);
       };
 
       nameField(userType, errors) {
@@ -108,8 +133,8 @@ class Settings extends Component {
                 label="Organization"
                 value={this.state.org}
                 onChange={this.handleChange}
-                //helperText={errors.org}
-                //error={errors.org ? true : false}
+                helperText={errors.org}
+                error={errors.org ? true : false}
                 />
             </Grid>
           );
@@ -122,8 +147,8 @@ class Settings extends Component {
                   label="First Name"
                   value={this.state.first}
                   onChange={this.handleChange}
-                  //helperText={errors.first}
-                  //error={errors.first ? true : false}
+                  helperText={errors.first}
+                  error={errors.first ? true : false}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -132,8 +157,8 @@ class Settings extends Component {
                   name="last"
                   value={this.state.last}
                   onChange={this.handleChange}
-                  //helperText={errors.last}
-                  //error={errors.last ? true : false}
+                  helperText={errors.last}
+                  error={errors.last ? true : false}
                 />
               </Grid>
             </Grid>
@@ -148,14 +173,13 @@ class Settings extends Component {
             <div>
                 <NavBar />
                 <Paper className={classes.paper}>
-                    <Avatar src={"https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__340.jpg"} className={classes.userIcon} />
-                    {/*src will be this.props.imageUrl after redux*/}
+                    <Avatar src={this.state.imageURL} className={classes.userIcon} />
                     <Typography component="h1" variant="h5">
                         Settings
                     </Typography>
                     <form className={classes.form} noValidate onSubmit={this.handleSubmit}>
 
-                    {this.nameField(this.state.userType)}   {/*{this.nameField(this.state.userType, errors)} <<< after redux*/} 
+                    {this.nameField(this.state.userType, error)}
 
                         <Grid item xs={12} className={classes.grid}>
                             <TextFieldWrapper
@@ -164,8 +188,8 @@ class Settings extends Component {
                                 type="password"
                                 value={this.state.currentPassword}
                                 onChange={this.handleChange}
-                                //helperText={error.title}
-                                //error={error.title ? true : false}
+                                helperText={error.currentPassword}
+                                error={error.currentPassword ? true : false}
                             />
                             <TextFieldWrapper
                                 name="newPassword"
@@ -173,8 +197,8 @@ class Settings extends Component {
                                 type="password"
                                 value={this.state.newPassword}
                                 onChange={this.handleChange}
-                                //helperText={error.title}
-                                //error={error.title ? true : false}
+                                helperText={error.newPassword}
+                                error={error.newPassword ? true : false}
                             />
                             <TextFieldWrapper
                                 name="confirmPassword"
@@ -183,8 +207,8 @@ class Settings extends Component {
                                 value={this.state.confirmPassword}
                                 onChange={this.handleChange}
                                 className={classes.textfield}
-                                //helperText={error.title}
-                                //error={error.title ? true : false}
+                                helperText={error.confirmPassword}
+                                error={error.confirmPassword ? true : false}
                             />
                             <Button
                             type="submit"
@@ -203,4 +227,14 @@ class Settings extends Component {
       }
 }
 
-export default (withStyles(styles)(Settings))
+const mapDispatchToProps = {
+  getAuthenticatedUserData: getAuthenticatedUserData,
+  updateUser: updateUser,
+}
+
+const mapStateToProps = (state) => ({
+  user: state.user,
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Settings));
