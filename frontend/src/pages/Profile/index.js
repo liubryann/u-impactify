@@ -9,6 +9,10 @@ import Paper from '@material-ui/core/Paper'
 import withStyles from "@material-ui/core/styles/withStyles"
 import NavBar from '../../components/NavBar'
 import { Button, TextField, Typography } from '@material-ui/core'
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import { getAuthenticatedUserData, updateUserDetails, uploadUserImage } from '../../redux/actions/userActions'
@@ -63,7 +67,8 @@ class Profile extends Component {
             email: credentials.email,
             imageURL: credentials.imageUrl,
             skills: credentials.skills,
-            intro: credentials.intro
+            intro: credentials.intro,
+            save: false 
         })
     }
 
@@ -84,7 +89,10 @@ class Profile extends Component {
             imageUrl: this.state.imageURL
         }
         this.props.updateUserDetails(userDetails);
-        window.location.reload();
+
+        this.setState({
+            save: true
+        })
     }
 
     handleImageUpload = async (event) => {
@@ -101,6 +109,7 @@ class Profile extends Component {
         const fileInput = document.getElementById('uploadImage');
         fileInput.click();
     }
+
 
     render() {
         const { classes } = this.props;
@@ -155,10 +164,16 @@ class Profile extends Component {
                     <br />
                     <br />
                     <div className={classes.buttons}>
-                        <Button onClick={() => (window.location.reload())}>Cancel</Button>
+                        <Button to="/home" component={Link}>Cancel</Button>
+                    
                         <Button type="submit" variant="contained" color="primary">Save</Button>
                     </div>
                 </form>
+                <Snackbar open={ this.state.save } autoHideDuration={3000} onClose={ () => { this.setState({ save: false })} }>
+                <MuiAlert severity={ "success" }>
+                { "Saved!" }
+                </MuiAlert>
+            </Snackbar>
             </div >
         )
     }
