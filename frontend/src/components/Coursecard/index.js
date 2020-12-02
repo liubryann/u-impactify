@@ -85,7 +85,7 @@ function CourseCard(props) {
 
     return (
         <Card className={classes.root, classes.card} style={{ backgroundColor: ' #9badbd', color: 'white' }}>
-            <CardActionArea component={Link} to={`/course/${props.course.courseId}`}>
+            <CardActionArea component={Link} to={`/course/${props.course.courseId}`} style={{pointerEvents:window.location.pathname === "/courses" ? "none" : "auto"}}>
                 <CardMedia
                     component="img"
                     height="140"
