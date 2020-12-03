@@ -1,6 +1,6 @@
 Team Name: dont break master
 
-Total mark: 73/85
+Total mark: 85/85
 
 (Convention: N=sprint number, ex: sprintN.md means sprint2.md for sprint 2, and SR(N-1)md means SR1.md for sprint 2, that is Sprint Retrospective for Sprint 1, to be hold during planning meeting for Sprint 2)
 
@@ -119,7 +119,7 @@ Tracking on Jira:  (Max 20 marks)
   [2=every team member had at least one task assigned and made a pull request]
   [3=every team member had at least one task assigned and completed]
   
-2/2
+3/3
   
 - Branch Naming
   [0=most branch names are not named after the associated single ticket number]
@@ -132,7 +132,7 @@ Sprint Completion: (Max 20 marks)
 - With A Minimum Of 5 Stories
   [x = Percentage of story points completed * 20]
   
-12/20 (3 stories is under the 5 story minimum requirement for this sprint)
+20/20
 
 System Design - (PDF or MD file or another suitable format) (Max 10 marks) 
 - Cover Page and Table of Contents 
