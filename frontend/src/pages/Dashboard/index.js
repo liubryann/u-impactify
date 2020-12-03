@@ -10,12 +10,13 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 import { userTypeDetails } from '../../redux/actions/userActions';
 import { userCourses } from '../../redux/actions/userActions';
+import { getAllPosts } from '../../redux/actions/postActions';
 
 import NavBar from "../../components/NavBar"
 import CourseWrapper from '../../components/Coursewrapper';
 import CustomButton from '../../components/CustomButton'; 
 import { userTypes } from '../../constants';
-
+import PostWrapper from '../../components/Postwrapper';
 
 const styles = (theme) => ({
   root: {
@@ -47,12 +48,17 @@ class Dashboard extends Component {
   componentDidMount() {
     this.props.userCourses();
     this.props.userTypeDetails();
+    this.props.getAllPosts();
   }
 
   render() {
     const { userCourses } = this.props.user;
     const { classes } = this.props;
-    const { userType } = this.props.user;
+    const { userType} = this.props.user;
+    const { posts } = this.props.posts;
+    const searchTitle = "";
+    const postLimit = 3;
+    const email = localStorage.getItem("email");
 
     if (userType === userTypes.IMPACT_LEARNER) {
       return (
@@ -66,8 +72,10 @@ class Dashboard extends Component {
               </Paper>
             </Grid>
             <Grid item xs={6} className={classes.item}>
-              <h1 className={classes.title}>Suggested Courses</h1>
-              <Paper className={classes.paper}>{/* Courses go here */}</Paper>
+              <h1 className={classes.title}>My Posts</h1>
+              <Paper className={classes.paper}>
+                <PostWrapper posts={posts} searchTitle={searchTitle} postLimit={postLimit} email = {email}/>
+              </Paper>
             </Grid>
           </Grid>
         </div>
@@ -95,7 +103,9 @@ class Dashboard extends Component {
             </Grid>
             <Grid item xs={5} className={classes.item}>
               <h1 className={classes.title}>My Posts</h1>
-              <Paper className={classes.paper}>{/* Posts go here */}</Paper>
+              <Paper className={classes.paper}>
+                <PostWrapper posts={posts} searchTitle={searchTitle} postLimit={postLimit} email = {email}/>
+              </Paper>
             </Grid>
           </Grid>
         </div>
@@ -106,9 +116,9 @@ class Dashboard extends Component {
           <NavBar />
           <Grid container justify='space-evenly' alignItems='center'>
             <Grid item xs={12} className={classes.item}>
-              <h1 className={classes.title}>My Courses</h1>
-              <Paper className={classes.paper}>
-                <CourseWrapper courses={userCourses} enrolled= {true} isStudent={false} justify="space-evenly" />
+              <h1 className={classes.title}>My Posts</h1>
+              <Paper className={classes.paper} style={{minHeight:"100px"}}>
+                <PostWrapper posts={posts} searchTitle={searchTitle} postLimit={postLimit} email = {email}/>
               </Paper>
             </Grid>
           </Grid>
@@ -120,17 +130,19 @@ class Dashboard extends Component {
 
 const mapDispatchToProps = {
   userTypeDetails: userTypeDetails,
-  userCourses: userCourses
+  userCourses: userCourses,
+  getAllPosts:getAllPosts
 };
 
 Dashboard.propTypes = {
   userCourses: PropTypes.func.isRequired,
   userTypeDetails: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = (state) => ({
-  user: state.user
+  user: state.user,
+  posts:state.posts
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Dashboard));

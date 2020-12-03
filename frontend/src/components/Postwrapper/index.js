@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PostWrapper(props) {
     const classes = useStyles();
+    
     if(!props.posts){
         return (
             <div className={classes.root}>
@@ -38,9 +39,14 @@ export default function PostWrapper(props) {
                   }
                 }
                 ).filter((post) => post.title.toLowerCase().includes(props.searchTitle.toLowerCase()))
+                .filter((post) => post.authorEmail.toLowerCase().includes(props.email.toLowerCase()))
                 .slice(0,props.postLimit)
                 .map((post, index) => <Post key={index} title={post.title} postType={post.type} postContent={post.content} pic={post.authorImageUrl} user={post.authorName} authorEmail={post.authorEmail}/>) }
             </Grid>
         </div>
     )
+}
+
+PostWrapper.defaultProps = {
+    email: "",    
 }
